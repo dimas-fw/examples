@@ -1,0 +1,67 @@
+# Copyright © 2024 Stephan Kunz
+# See https://doc.rust-lang.org/cargo/reference/manifest.html
+[workspace]
+resolver="2"
+
+members = [
+	"arequipa",
+	"barcelona",
+	"cordoba",
+	"delhi",
+	"freeport",
+	"geneva",
+	"georgetown",
+	"hamburg",
+	"hebron",
+	"kingston",
+	"lyon",
+	"mandalay",
+	"medellin",
+	"messages",
+	"monaco",
+	"osaka",
+	"ponce",
+	"portsmouth",
+	"rotterdam",
+	"taipei",
+	"tripoli",
+]
+
+[workspace.lints.rust]
+unsafe_code = "forbid"
+missing_docs = "warn"
+#unused="allow" # for dev only
+
+[workspace.lints.clippy]
+enum_glob_use = "deny"
+pedantic = "deny"
+nursery = "deny"
+unwrap_used = "deny"
+
+[workspace.package]
+rust-version = "1.75.0"
+edition = "2021"
+version = "0.0.1"
+authors = [
+	"stepkun <stephan.kunz@kabelbw.de>",
+]
+#license = "NGMC"
+license-file = "LICENSE"
+categories = [
+	"development-tools",
+	"science::robotics",
+	"simulation"
+]
+
+[workspace.dependencies]
+dimas = "0.0.5"
+tokio = "1"
+tracing = "0.1"
+tracing-subscriber = "0.3"
+
+[profile.release]
+opt-level = 'z'   # Optimize for size.
+lto = true        # Enable Link Time Optimisation
+codegen-units = 1 # Reduced to increase optimisations.
+panic = 'abort'   # Abort on panic
+strip = "symbols" # Strip symbols from binary
