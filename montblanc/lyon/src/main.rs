@@ -10,18 +10,19 @@ use tracing::info;
 #[derive(Debug)]
 struct AgentProps {}
 
-fn amazon_callback(ctx: &ArcContext<AgentProps>, message: &Message) {
-	let value: messages::Float32 = bitcode::decode(message).expect("should not happen");
+fn amazon_callback(ctx: &ArcContext<AgentProps>, message: Message) -> Result<(), DimasError> {
+	let value: messages::Float32 = message.decode()?;
 	let _ = ctx.put_with("tigris", &value);
 	info!("sent: '{value}'");
+	Ok(())
 }
 
-#[tokio::main]
-async fn main() -> Result<()> {
+#[tokio::main(flavor = "current_thread")]
+async fn main() -> Result<(), DimasError> {
 	tracing_subscriber::fmt::init();
 
 	let properties = AgentProps {};
-	let mut agent = Agent::new(Config::local(), properties);
+	let mut agent = Agent::new(Config::local(), properties)?;
 
 	agent.publisher().msg_type("tigris").add()?;
 
@@ -31,6 +32,6 @@ async fn main() -> Result<()> {
 		.msg_type("amazon")
 		.add()?;
 
-	agent.start().await;
+	agent.start().await?;
 	Ok(())
 }

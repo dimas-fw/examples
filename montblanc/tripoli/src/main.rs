@@ -15,27 +15,29 @@ struct AgentProps {
 	columbia: Option<messages::Image>,
 }
 
-fn columbia_callback(ctx: &ArcContext<AgentProps>, message: &Message) {
-	let value: messages::Image = bitcode::decode(message).expect("should not happen");
+fn columbia_callback(ctx: &ArcContext<AgentProps>, message: Message) -> Result<(), DimasError> {
+	let value: messages::Image = message.decode()?;
 	// just to see what has been sent
 	info!("received: '{}'", &value);
 	ctx.write().expect("should not happen").columbia = Some(value);
+	Ok(())
 }
 
-fn godavari_callback(ctx: &ArcContext<AgentProps>, message: &Message) {
-	let value: messages::LaserScan = bitcode::decode(message).expect("should not happen");
+fn godavari_callback(ctx: &ArcContext<AgentProps>, message: Message) -> Result<(), DimasError> {
+	let value: messages::LaserScan = message.decode()?;
 	info!("received: '{}'", &value);
 	let msg = messages::PointCloud2::random();
 	let _ = ctx.put_with("loire", &msg);
 	info!("received: '{}'", msg);
+	Ok(())
 }
 
 #[tokio::main]
-async fn main() -> Result<()> {
+async fn main() -> Result<(), DimasError> {
 	tracing_subscriber::fmt::init();
 
 	let properties = AgentProps::default();
-	let mut agent = Agent::new(Config::local(), properties);
+	let mut agent = Agent::new(Config::local(), properties)?;
 
 	agent
 		.subscriber()
@@ -51,6 +53,6 @@ async fn main() -> Result<()> {
 
 	agent.publisher().msg_type("loire").add()?;
 
-	agent.start().await;
+	agent.start().await?;
 	Ok(())
 }

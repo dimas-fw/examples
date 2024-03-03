@@ -11,12 +11,12 @@ use tracing::info;
 #[derive(Debug)]
 struct AgentProps {}
 
-#[tokio::main]
-async fn main() -> Result<()> {
+#[tokio::main(flavor = "current_thread")]
+async fn main() -> Result<(), DimasError> {
 	tracing_subscriber::fmt::init();
 
 	let properties = AgentProps {};
-	let mut agent = Agent::new(Config::local(), properties);
+	let mut agent = Agent::new(Config::local(), properties)?;
 
 	agent.publisher().msg_type("columbia").add()?;
 
@@ -24,14 +24,15 @@ async fn main() -> Result<()> {
 		.timer()
 		.name("timer")
 		.interval(Duration::from_secs(1))
-		.callback(|ctx| {
+		.callback(|ctx| -> Result<(), DimasError> {
 			let message = messages::Image::random();
-			let _ = ctx.put_with("columbia", &message);
+			ctx.put_with("columbia", &message)?;
 			// just to see what has been sent
 			info!("sent: '{message}'");
+			Ok(())
 		})
 		.add()?;
 
-	agent.start().await;
+	agent.start().await?;
 	Ok(())
 }

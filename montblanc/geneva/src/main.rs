@@ -20,40 +20,44 @@ struct AgentProps {
 	congo: Option<messages::Twist>,
 }
 
-fn parana_callback(ctx: &ArcContext<AgentProps>, message: &Message) {
-	let value: messages::StringMsg = bitcode::decode(message).expect("should not happen");
+fn parana_callback(ctx: &ArcContext<AgentProps>, message: Message) -> Result<(), DimasError> {
+	let value: messages::StringMsg = message.decode()?;
 	info!("received: '{}'", &value);
 	let msg = messages::StringMsg {
 		data: format!("geneva/arkansas: {}", &value),
 	};
 	let _ = ctx.put_with("arkansas", &msg);
 	info!("sent: '{msg}'");
+	Ok(())
 }
 
-fn danube_callback(ctx: &ArcContext<AgentProps>, message: &Message) {
-	let value: messages::StringMsg = bitcode::decode(message).expect("should not happen");
+fn danube_callback(ctx: &ArcContext<AgentProps>, message: Message) -> Result<(), DimasError> {
+	let value: messages::StringMsg = message.decode()?;
 	info!("received: '{}'", &value);
 	ctx.write().expect("should not happen").danube = Some(value);
+	Ok(())
 }
 
-fn tagus_callback(ctx: &ArcContext<AgentProps>, message: &Message) {
-	let value: messages::Pose = bitcode::decode(message).expect("should not happen");
+fn tagus_callback(ctx: &ArcContext<AgentProps>, message: Message) -> Result<(), DimasError> {
+	let value: messages::Pose = message.decode()?;
 	info!("received: '{}'", &value);
 	ctx.write().expect("should not happen").tagus = Some(value);
+	Ok(())
 }
 
-fn congo_callback(ctx: &ArcContext<AgentProps>, message: &Message) {
-	let value: messages::Twist = bitcode::decode(message).expect("should not happen");
+fn congo_callback(ctx: &ArcContext<AgentProps>, message: Message) -> Result<(), DimasError> {
+	let value: messages::Twist = message.decode()?;
 	info!("received: '{}'", &value);
 	ctx.write().expect("should not happen").congo = Some(value);
+	Ok(())
 }
 
 #[tokio::main]
-async fn main() -> Result<()> {
+async fn main() -> Result<(), DimasError> {
 	tracing_subscriber::fmt::init();
 
 	let properties = AgentProps::default();
-	let mut agent = Agent::new(Config::default(), properties);
+	let mut agent = Agent::new(Config::default(), properties)?;
 
 	agent.publisher().msg_type("arkansas").add()?;
 
@@ -81,6 +85,6 @@ async fn main() -> Result<()> {
 		.msg_type("congo")
 		.add()?;
 
-	agent.start().await;
+	agent.start().await?;
 	Ok(())
 }

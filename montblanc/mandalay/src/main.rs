@@ -28,48 +28,54 @@ struct AgentProps {
 	yamuna: Option<messages::Vector3>,
 }
 
-fn danube_callback(ctx: &ArcContext<AgentProps>, message: &Message) {
-	let value: messages::StringMsg = bitcode::decode(message).expect("should not happen");
+fn danube_callback(ctx: &ArcContext<AgentProps>, message: Message) -> Result<(), DimasError> {
+	let value: messages::StringMsg = message.decode()?;
 	info!("received: '{}'", &value);
 	ctx.write().expect("should not happen").danube = Some(value);
+	Ok(())
 }
 
-fn chenab_callback(ctx: &ArcContext<AgentProps>, message: &Message) {
-	let value: messages::Quaternion = bitcode::decode(message).expect("should not happen");
+fn chenab_callback(ctx: &ArcContext<AgentProps>, message: Message) -> Result<(), DimasError> {
+	let value: messages::Quaternion = message.decode()?;
 	info!("received: '{}'", &value);
 	ctx.write().expect("should not happen").chenab = Some(value);
+	Ok(())
 }
 
-fn salween_callback(ctx: &ArcContext<AgentProps>, message: &Message) {
-	let value: messages::PointCloud2 = bitcode::decode(message).expect("should not happen");
+fn salween_callback(ctx: &ArcContext<AgentProps>, message: Message) -> Result<(), DimasError> {
+	let value: messages::PointCloud2 = message.decode()?;
 	info!("received: '{}'", &value);
 	ctx.write().expect("should not happen").salween = Some(value);
+	Ok(())
 }
 
-fn godavari_callback(ctx: &ArcContext<AgentProps>, message: &Message) {
-	let value: messages::LaserScan = bitcode::decode(message).expect("should not happen");
+fn godavari_callback(ctx: &ArcContext<AgentProps>, message: Message) -> Result<(), DimasError> {
+	let value: messages::LaserScan = message.decode()?;
 	info!("received: '{}'", &value);
 	ctx.write().expect("should not happen").godavari = Some(value);
+	Ok(())
 }
 
-fn yamuna_callback(ctx: &ArcContext<AgentProps>, message: &Message) {
-	let value: messages::Vector3 = bitcode::decode(message).expect("should not happen");
+fn yamuna_callback(ctx: &ArcContext<AgentProps>, message: Message) -> Result<(), DimasError> {
+	let value: messages::Vector3 = message.decode()?;
 	info!("received: '{}'", &value);
 	ctx.write().expect("should not happen").yamuna = Some(value);
+	Ok(())
 }
 
-fn loire_callback(ctx: &ArcContext<AgentProps>, message: &Message) {
-	let value: messages::PointCloud2 = bitcode::decode(message).expect("should not happen");
+fn loire_callback(ctx: &ArcContext<AgentProps>, message: Message) -> Result<(), DimasError> {
+	let value: messages::PointCloud2 = message.decode()?;
 	info!("received: '{}'", &value);
 	ctx.write().expect("should not happen").loire = Some(value);
+	Ok(())
 }
 
 #[tokio::main]
-async fn main() -> Result<()> {
+async fn main() -> Result<(), DimasError> {
 	tracing_subscriber::fmt::init();
 
 	let properties = AgentProps::default();
-	let mut agent = Agent::new(Config::default(), properties);
+	let mut agent = Agent::new(Config::default(), properties)?;
 
 	agent
 		.subscriber()
@@ -117,10 +123,11 @@ async fn main() -> Result<()> {
 		.timer()
 		.name("timer")
 		.interval(Duration::from_millis(100))
-		.callback(|ctx| {
+		.callback(|ctx| -> Result<(), DimasError> {
 			let message = messages::Pose::random();
-			let _ = ctx.put_with("tagus", &message);
+			ctx.put_with("tagus", &message)?;
 			info!("sent: '{}'", message);
+			Ok(())
 		})
 		.add()?;
 
@@ -128,10 +135,11 @@ async fn main() -> Result<()> {
 		.timer()
 		.name("timer")
 		.interval(Duration::from_millis(100))
-		.callback(|ctx| {
+		.callback(|ctx| -> Result<(), DimasError> {
 			let message = messages::Image::random();
-			let _ = ctx.put_with("missouri", message);
+			ctx.put_with("missouri", message)?;
 			info!("mandalay sent Image");
+			Ok(())
 		})
 		.add()?;
 
@@ -139,13 +147,14 @@ async fn main() -> Result<()> {
 		.timer()
 		.name("timer")
 		.interval(Duration::from_millis(100))
-		.callback(|ctx| {
+		.callback(|ctx| -> Result<(), DimasError> {
 			let message = messages::PointCloud2::random();
-			let _ = ctx.put_with("brazos", message);
+			ctx.put_with("brazos", message)?;
 			info!("mandalay sent PointCloud2");
+			Ok(())
 		})
 		.add()?;
 
-	agent.start().await;
+	agent.start().await?;
 	Ok(())
 }

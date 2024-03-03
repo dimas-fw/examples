@@ -48,15 +48,15 @@ tmux select-pane -t 2
 tmux send-keys "cargo run --bin monaco $1" C-m
 tmux select-pane -t 3
 tmux send-keys "cargo run --bin rotterdam $1" C-m
+tmux select-pane -t 4
+tmux send-keys "tail -F /tmp/montblanc.out" C-m
 tmux select-pane -t 5
 tmux send-keys "cargo run --bin arequipa $1" C-m
 tmux select-pane -t 6
 tmux send-keys "cargo run --bin barcelona $1" C-m
 tmux select-pane -t 7
 tmux send-keys "cargo run --bin georgetown $1" C-m
-tmux select-pane -t 8
-tmux send-keys "tail -F /tmp/montblanc.out" C-m
 
-tmux select-pane -t 4
+tmux select-pane -t 0
 
 tmux attach-session -t $session

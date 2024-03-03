@@ -19,39 +19,43 @@ struct AgentProps {
 	tigris: f32,
 }
 
-fn tigris_callback(ctx: &ArcContext<AgentProps>, message: &Message) {
-	let value: messages::Float32 = bitcode::decode(message).expect("should not happen");
+fn tigris_callback(ctx: &ArcContext<AgentProps>, message: Message) -> Result<(), DimasError> {
+	let value: messages::Float32 = message.decode()?;
 	ctx.write().expect("should not happen").tigris = value.data;
 	info!("received: '{}'", &value);
+	Ok(())
 }
 
-fn ganges_callback(ctx: &ArcContext<AgentProps>, message: &Message) {
-	let value: messages::Int64 = bitcode::decode(message).expect("should not happen");
+fn ganges_callback(ctx: &ArcContext<AgentProps>, message: Message) -> Result<(), DimasError> {
+	let value: messages::Int64 = message.decode()?;
 	ctx.write().expect("should not happen").ganges = value.data;
 	info!("received: '{}'", &value);
+	Ok(())
 }
 
-fn nile_callback(ctx: &ArcContext<AgentProps>, message: &Message) {
-	let value: messages::Int32 = bitcode::decode(message).expect("should not happen");
+fn nile_callback(ctx: &ArcContext<AgentProps>, message: Message) -> Result<(), DimasError> {
+	let value: messages::Int32 = message.decode()?;
 	ctx.write().expect("should not happen").nile = value.data;
 	info!("received: '{}'", &value);
+	Ok(())
 }
 
-fn danube_callback(ctx: &ArcContext<AgentProps>, message: &Message) {
-	let value: messages::StringMsg = bitcode::decode(message).expect("should not happen");
+fn danube_callback(ctx: &ArcContext<AgentProps>, message: Message) -> Result<(), DimasError> {
+	let value: messages::StringMsg = message.decode()?;
 	let msg = messages::StringMsg {
 		data: format!("hamburg/parana: {}", &value.data),
 	};
 	let _ = ctx.put_with("parana", &msg);
 	info!("sent: '{msg}'");
+	Ok(())
 }
 
 #[tokio::main]
-async fn main() -> Result<()> {
+async fn main() -> Result<(), DimasError> {
 	tracing_subscriber::fmt::init();
 
 	let properties = AgentProps::default();
-	let mut agent = Agent::new(Config::default(), properties);
+	let mut agent = Agent::new(Config::default(), properties)?;
 
 	agent.publisher().msg_type("parana").add()?;
 
@@ -79,6 +83,6 @@ async fn main() -> Result<()> {
 		.msg_type("danube")
 		.add()?;
 
-	agent.start().await;
+	agent.start().await?;
 	Ok(())
 }

@@ -10,20 +10,21 @@ use tracing::info;
 #[derive(Debug)]
 struct AgentProps {}
 
-fn columbia_callback(ctx: &ArcContext<AgentProps>, message: &Message) {
-	let mut value: messages::Image = bitcode::decode(message).expect("should not happen");
+fn columbia_callback(ctx: &ArcContext<AgentProps>, message: Message) -> Result<(), DimasError> {
+	let mut value: messages::Image = message.decode()?;
 	info!("received: '{}'", &value);
 	value.header.frame_id = value.header.frame_id.replace("Test", "Modified");
 	let _ = ctx.put_with("colorado", &value);
 	info!("received: '{}'", value);
+	Ok(())
 }
 
-#[tokio::main]
-async fn main() -> Result<()> {
+#[tokio::main(flavor = "current_thread")]
+async fn main() -> Result<(), DimasError> {
 	tracing_subscriber::fmt::init();
 
 	let properties = AgentProps {};
-	let mut agent = Agent::new(Config::local(), properties);
+	let mut agent = Agent::new(Config::local(), properties)?;
 
 	agent.publisher().msg_type("colorado").add()?;
 
@@ -33,6 +34,6 @@ async fn main() -> Result<()> {
 		.msg_type("columbia")
 		.add()?;
 
-	agent.start().await;
+	agent.start().await?;
 	Ok(())
 }

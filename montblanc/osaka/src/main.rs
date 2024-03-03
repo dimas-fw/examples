@@ -20,38 +20,41 @@ struct AgentProps {
 	colorado: Option<messages::Image>,
 }
 
-fn parana_callback(ctx: &ArcContext<AgentProps>, message: &Message) {
-	let value: messages::StringMsg = bitcode::decode(message).expect("should not happen");
+fn parana_callback(ctx: &ArcContext<AgentProps>, message: Message) -> Result<(), DimasError> {
+	let value: messages::StringMsg = message.decode()?;
 	info!("received: '{}'", &value);
 	ctx.write().expect("should not happen").parana = Some(value);
+	Ok(())
 }
 
-fn columbia_callback(ctx: &ArcContext<AgentProps>, message: &Message) {
-	let value: messages::Image = bitcode::decode(message).expect("should not happen");
+fn columbia_callback(ctx: &ArcContext<AgentProps>, message: Message) -> Result<(), DimasError> {
+	let value: messages::Image = message.decode()?;
 	info!("received: '{}'", &value);
 	ctx.write().expect("should not happen").columbia = Some(value);
+	Ok(())
 }
 
-fn colorado_callback(ctx: &ArcContext<AgentProps>, message: &Message) {
-	let value: messages::Image = bitcode::decode(message).expect("should not happen");
+fn colorado_callback(ctx: &ArcContext<AgentProps>, message: Message) -> Result<(), DimasError> {
+	let value: messages::Image = message.decode()?;
 	info!("received: '{}'", &value);
 	ctx.write().expect("should not happen").colorado = Some(value);
 
 	let message = messages::PointCloud2::random();
-	let _ = ctx.put_with("salween", &message);
+	ctx.put_with("salween", &message)?;
 	info!("sent: '{}'", message);
 
 	let message = messages::LaserScan::random();
-	let _ = ctx.put_with("godavari", &message);
+	ctx.put_with("godavari", &message)?;
 	info!("sent: '{}'", message);
+	Ok(())
 }
 
 #[tokio::main]
-async fn main() -> Result<()> {
+async fn main() -> Result<(), DimasError> {
 	tracing_subscriber::fmt::init();
 
 	let properties = AgentProps::default();
-	let mut agent = Agent::new(Config::local(), properties);
+	let mut agent = Agent::new(Config::local(), properties)?;
 
 	agent
 		.subscriber()
@@ -75,6 +78,6 @@ async fn main() -> Result<()> {
 
 	agent.publisher().msg_type("godavari").add()?;
 
-	agent.start().await;
+	agent.start().await?;
 	Ok(())
 }

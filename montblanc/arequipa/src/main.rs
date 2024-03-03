@@ -16,8 +16,8 @@ struct AgentProps {
 	file: File,
 }
 
-fn arkansas_callback(ctx: &ArcContext<AgentProps>, message: &Message) {
-	let value: messages::StringMsg = bitcode::decode(message).expect("should not happen");
+fn arkansas_callback(ctx: &ArcContext<AgentProps>, message: Message) -> Result<(), DimasError> {
+	let value: messages::StringMsg = message.decode()?;
 	info!("received: '{}'", &value.data);
 	let final_data = format!("{}\n", value.data);
 	ctx.write()
@@ -25,10 +25,11 @@ fn arkansas_callback(ctx: &ArcContext<AgentProps>, message: &Message) {
 		.file
 		.write_all(final_data.as_bytes())
 		.expect("should not happen");
+	Ok(())
 }
 
-#[tokio::main]
-async fn main() -> Result<()> {
+#[tokio::main(flavor = "current_thread")]
+async fn main() -> Result<(), DimasError> {
 	tracing_subscriber::fmt::init();
 
 	let file = File::create(OUT_FILE).unwrap_or_else(|_| {
@@ -36,7 +37,7 @@ async fn main() -> Result<()> {
 		panic!("Could not create {OUT_FILE}");
 	});
 	let properties = AgentProps { file };
-	let mut agent = Agent::new(Config::local(), properties);
+	let mut agent = Agent::new(Config::local(), properties)?;
 
 	agent
 		.subscriber()
@@ -44,6 +45,6 @@ async fn main() -> Result<()> {
 		.msg_type("arkansas")
 		.add()?;
 
-	agent.start().await;
+	agent.start().await?;
 	Ok(())
 }
