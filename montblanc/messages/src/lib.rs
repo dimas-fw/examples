@@ -24,6 +24,7 @@ pub fn random_string(length: usize) -> String {
 
 /// Float64 message
 #[derive(Debug, Encode, Decode)]
+#[repr(C)]
 pub struct Float64 {
 	/// data
 	pub data: f64,
@@ -47,6 +48,7 @@ impl Display for Float64 {
 
 /// Float32 message
 #[derive(Debug, Encode, Decode)]
+#[repr(C)]
 pub struct Float32 {
 	/// data
 	pub data: f32,
@@ -70,6 +72,7 @@ impl Display for Float32 {
 
 /// Int64 message
 #[derive(Debug, Encode, Decode)]
+#[repr(C)]
 pub struct Int64 {
 	/// data
 	pub data: i64,
@@ -91,6 +94,7 @@ impl Display for Int64 {
 
 /// Int32 message
 #[derive(Debug, Encode, Decode)]
+#[repr(C)]
 pub struct Int32 {
 	/// data
 	pub data: i32,
@@ -112,6 +116,7 @@ impl Display for Int32 {
 
 /// String message
 #[derive(Debug, Encode, Decode)]
+#[repr(C)]
 pub struct StringMsg {
 	/// data
 	pub data: String,
@@ -136,6 +141,7 @@ impl Display for StringMsg {
 /// Timestamp message
 /// Representing the elapsed seconds since 1.1.1970 00:00:00.000. Negative values are before that date.
 #[derive(Debug, Encode, Decode)]
+#[repr(C)]
 pub struct Timestamp {
 	/// seconds, valid over all i64 values
 	pub sec: i64,
@@ -166,6 +172,7 @@ impl Display for Timestamp {
 /// This is generally used to communicate timestamped data
 /// in a particular coordinate frame.
 #[derive(Debug, Encode, Decode)]
+#[repr(C)]
 pub struct Header {
 	/// Timestamp of message creation
 	pub timestamp: Timestamp,
@@ -203,6 +210,7 @@ impl Display for Header {
 /// Point message
 /// Contains the position of a point in free space
 #[derive(Debug, Encode, Decode)]
+#[repr(C)]
 pub struct Point {
 	/// x value
 	pub x: f64,
@@ -233,6 +241,7 @@ impl Display for Point {
 /// Quaternion message
 /// Represents an orientation in free space in quaternion form
 #[derive(Debug, Encode, Decode)]
+#[repr(C)]
 pub struct Quaternion {
 	/// x value
 	pub x: f64,
@@ -269,6 +278,7 @@ impl Display for Quaternion {
 /// A vector is always anchored at the origin.
 /// When a transform is applied to a vector, only the rotational component is applied.
 #[derive(Debug, Encode, Decode)]
+#[repr(C)]
 pub struct Vector3 {
 	/// x value
 	pub x: f64,
@@ -301,6 +311,7 @@ impl Display for Vector3 {
 /// Note that this follows vector semantics with it always anchored at the origin,
 /// so the rotational elements of a transform are the only parts applied when transforming.
 #[derive(Debug, Encode, Decode)]
+#[repr(C)]
 pub struct Vector3Stamped {
 	/// Timestamp and frame id
 	pub header: Header,
@@ -328,6 +339,7 @@ impl Display for Vector3Stamped {
 /// Pose message
 /// Representation of pose in free space, composed of position and orientation
 #[derive(Debug, Encode, Decode)]
+#[repr(C)]
 pub struct Pose {
 	/// Position is a Point in free space
 	pub position: Point,
@@ -359,6 +371,7 @@ impl Display for Pose {
 /// Twist message
 /// Expresses velocity in free space broken into its linear and angular parts
 #[derive(Debug, Encode, Decode)]
+#[repr(C)]
 pub struct Twist {
 	/// Linear velocity
 	pub linear: Vector3,
@@ -385,6 +398,7 @@ impl Display for Twist {
 
 /// Twist with Covariance message
 #[derive(Debug, Encode, Decode)]
+#[repr(C)]
 pub struct TwistWithCovariance {
 	/// Twist
 	pub twist: Twist,
@@ -414,6 +428,7 @@ impl Display for TwistWithCovariance {
 
 /// Twist with Covariance and Header message
 #[derive(Debug, Encode, Decode)]
+#[repr(C)]
 pub struct TwistWithCovarianceStamped {
 	/// Timestamp and frame id
 	pub header: Header,
@@ -440,6 +455,7 @@ impl Display for TwistWithCovarianceStamped {
 
 /// Wrench message - represents force in free space, separated into its linear and angular parts
 #[derive(Debug, Encode, Decode)]
+#[repr(C)]
 pub struct Wrench {
 	/// Linear part is force
 	pub force: Vector3,
@@ -466,6 +482,7 @@ impl Display for Wrench {
 
 /// Wrench with Header message
 #[derive(Debug, Encode, Decode)]
+#[repr(C)]
 pub struct WrenchStamped {
 	/// Timestamp and frame id
 	pub header: Header,
@@ -497,6 +514,7 @@ impl Display for WrenchStamped {
 /// +y should point down in the image
 /// +z should point into to plane of the image
 #[derive(Debug, Encode, Decode)]
+#[repr(C)]
 pub struct Image {
 	/// Header timestamp should be acquisition time of image
 	/// Header frame_id should be optical frame of camera
@@ -560,6 +578,7 @@ impl Display for Image {
 /// array), please find or create a different message, since applications
 /// will make fairly laser-specific assumptions about this data
 #[derive(Debug, Encode, Decode)]
+#[repr(C)]
 pub struct LaserScan {
 	/// timestamp in the header is the acquisition time of
 	/// the first ray in the scan.
@@ -623,6 +642,7 @@ impl Display for LaserScan {
 /// Data Type message
 /// Definitions for the type of data used in `PointField`
 #[derive(Debug, Encode, Decode)]
+#[repr(C)]
 pub enum DataType {
 	/// Int8 type
 	Int8,
@@ -646,6 +666,7 @@ pub enum DataType {
 /// Holds the description of one point entry in the `PointCloud2` message format
 /// Common Point Field names are x, y, z, intensity, rgb, rgba
 #[derive(Debug, Encode, Decode)]
+#[repr(C)]
 pub struct PointField {
 	/// Name of field
 	pub name: String,
@@ -666,6 +687,7 @@ pub struct PointField {
 /// Point clouds organized as 2d images may be produced by camera depth sensors
 /// such as stereo or time-of-flight.
 #[derive(Debug, Encode, Decode)]
+#[repr(C)]
 pub struct PointCloud2 {
 	/// Time of sensor data acquisition, and the coordinate frame ID (for 3d points)
 	pub header: Header,

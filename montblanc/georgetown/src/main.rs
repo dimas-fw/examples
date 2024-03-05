@@ -38,7 +38,7 @@ async fn main() -> Result<(), DimasError> {
 	tracing_subscriber::fmt::init();
 
 	let properties = AgentProps::default();
-	let mut agent = Agent::new(Config::local(), properties)?;
+	let mut agent = Agent::new(Config::default(), properties)?;
 
 	agent.publisher().msg_type("volga").add()?;
 
