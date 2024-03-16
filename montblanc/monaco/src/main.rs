@@ -13,17 +13,17 @@ use tracing::info;
 #[derive(Debug, Default)]
 struct AgentProps {}
 
-fn congo_callback(ctx: &ArcContext<AgentProps>, message: Message) -> Result<(), DimasError> {
+fn congo_callback(ctx: &ArcContext<AgentProps>, message: Message) -> Result<()> {
 	let value: messages::Twist = message.decode()?;
 	info!("received: '{}'", &value);
 	let msg = messages::Float32::random();
-	let _ = ctx.put_with("ohio", &msg);
-	info!("sent: '{msg}'");
+	info!("sent: '{}'", &msg);
+	let _ = ctx.put_with("ohio", msg);
 	Ok(())
 }
 
 #[tokio::main(flavor = "current_thread")]
-async fn main() -> Result<(), DimasError> {
+async fn main() -> Result<()> {
 	tracing_subscriber::fmt::init();
 
 	let properties = AgentProps::default();

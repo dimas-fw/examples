@@ -19,39 +19,39 @@ struct AgentProps {
 	tigris: f32,
 }
 
-fn tigris_callback(ctx: &ArcContext<AgentProps>, message: Message) -> Result<(), DimasError> {
+fn tigris_callback(ctx: &ArcContext<AgentProps>, message: Message) -> Result<()> {
 	let value: messages::Float32 = message.decode()?;
 	ctx.write().expect("should not happen").tigris = value.data;
 	info!("received: '{}'", &value);
 	Ok(())
 }
 
-fn ganges_callback(ctx: &ArcContext<AgentProps>, message: Message) -> Result<(), DimasError> {
+fn ganges_callback(ctx: &ArcContext<AgentProps>, message: Message) -> Result<()> {
 	let value: messages::Int64 = message.decode()?;
 	ctx.write().expect("should not happen").ganges = value.data;
 	info!("received: '{}'", &value);
 	Ok(())
 }
 
-fn nile_callback(ctx: &ArcContext<AgentProps>, message: Message) -> Result<(), DimasError> {
+fn nile_callback(ctx: &ArcContext<AgentProps>, message: Message) -> Result<()> {
 	let value: messages::Int32 = message.decode()?;
 	ctx.write().expect("should not happen").nile = value.data;
 	info!("received: '{}'", &value);
 	Ok(())
 }
 
-fn danube_callback(ctx: &ArcContext<AgentProps>, message: Message) -> Result<(), DimasError> {
+fn danube_callback(ctx: &ArcContext<AgentProps>, message: Message) -> Result<()> {
 	let value: messages::StringMsg = message.decode()?;
 	let msg = messages::StringMsg {
 		data: format!("hamburg/parana: {}", &value.data),
 	};
-	let _ = ctx.put_with("parana", &msg);
-	info!("sent: '{msg}'");
+	info!("sent: '{}'", &msg);
+	let _ = ctx.put_with("parana", msg);
 	Ok(())
 }
 
 #[tokio::main]
-async fn main() -> Result<(), DimasError> {
+async fn main() -> Result<()> {
 	tracing_subscriber::fmt::init();
 
 	let properties = AgentProps::default();

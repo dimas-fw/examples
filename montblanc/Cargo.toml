@@ -41,7 +41,7 @@ unwrap_used = "deny"
 [workspace.package]
 rust-version = "1.75.0"
 edition = "2021"
-version = "0.0.2"
+version = "0.0.3"
 authors = [
 	"stepkun <stephan.kunz@kabelbw.de>",
 ]
@@ -54,7 +54,7 @@ categories = [
 ]
 
 [workspace.dependencies]
-dimas = "0.0.6"
+dimas = "0.0.7"
 #dimas = { path = "../../dimas/dimas"}
 tokio = "1"
 tracing = "0.1"
@@ -64,5 +64,5 @@ tracing-subscriber = "0.3"
 opt-level = 'z'   # Optimize for size.
 lto = true        # Enable Link Time Optimisation
 codegen-units = 1 # Reduced to increase optimisations.
-panic = 'abort'   # Abort on panic
+#panic = 'abort'   # Abort on panic
 strip = "symbols" # Strip symbols from binary

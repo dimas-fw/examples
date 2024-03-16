@@ -13,20 +13,20 @@ use tracing::info;
 #[derive(Debug, Default)]
 struct AgentProps {}
 
-fn mekong_callback(ctx: &ArcContext<AgentProps>, message: Message) -> Result<(), DimasError> {
+fn mekong_callback(ctx: &ArcContext<AgentProps>, message: Message) -> Result<()> {
 	let value: messages::TwistWithCovarianceStamped = message.decode()?;
 	info!("received: '{}'", &value);
 	let msg = messages::Vector3Stamped {
 		header: value.header,
 		vector: value.twist.twist.linear,
 	};
-	let _ = ctx.put_with("murray", &msg);
-	info!("sent: '{}'", msg);
+	info!("sent: '{}'", &msg);
+	let _ = ctx.put_with("murray", msg);
 	Ok(())
 }
 
 #[tokio::main(flavor = "current_thread")]
-async fn main() -> Result<(), DimasError> {
+async fn main() -> Result<()> {
 	tracing_subscriber::fmt::init();
 
 	let properties = AgentProps::default();

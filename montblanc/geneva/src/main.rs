@@ -20,32 +20,32 @@ struct AgentProps {
 	congo: Option<messages::Twist>,
 }
 
-fn parana_callback(ctx: &ArcContext<AgentProps>, message: Message) -> Result<(), DimasError> {
+fn parana_callback(ctx: &ArcContext<AgentProps>, message: Message) -> Result<()> {
 	let value: messages::StringMsg = message.decode()?;
 	info!("received: '{}'", &value);
 	let msg = messages::StringMsg {
 		data: format!("geneva/arkansas: {}", &value),
 	};
-	let _ = ctx.put_with("arkansas", &msg);
-	info!("sent: '{msg}'");
+	info!("sent: '{}'", &msg);
+	let _ = ctx.put_with("arkansas", msg);
 	Ok(())
 }
 
-fn danube_callback(ctx: &ArcContext<AgentProps>, message: Message) -> Result<(), DimasError> {
+fn danube_callback(ctx: &ArcContext<AgentProps>, message: Message) -> Result<()> {
 	let value: messages::StringMsg = message.decode()?;
 	info!("received: '{}'", &value);
 	ctx.write().expect("should not happen").danube = Some(value);
 	Ok(())
 }
 
-fn tagus_callback(ctx: &ArcContext<AgentProps>, message: Message) -> Result<(), DimasError> {
+fn tagus_callback(ctx: &ArcContext<AgentProps>, message: Message) -> Result<()> {
 	let value: messages::Pose = message.decode()?;
 	info!("received: '{}'", &value);
 	ctx.write().expect("should not happen").tagus = Some(value);
 	Ok(())
 }
 
-fn congo_callback(ctx: &ArcContext<AgentProps>, message: Message) -> Result<(), DimasError> {
+fn congo_callback(ctx: &ArcContext<AgentProps>, message: Message) -> Result<()> {
 	let value: messages::Twist = message.decode()?;
 	info!("received: '{}'", &value);
 	ctx.write().expect("should not happen").congo = Some(value);
@@ -53,7 +53,7 @@ fn congo_callback(ctx: &ArcContext<AgentProps>, message: Message) -> Result<(), 
 }
 
 #[tokio::main]
-async fn main() -> Result<(), DimasError> {
+async fn main() -> Result<()> {
 	tracing_subscriber::fmt::init();
 
 	let properties = AgentProps::default();

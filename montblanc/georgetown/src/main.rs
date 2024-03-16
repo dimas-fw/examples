@@ -19,14 +19,14 @@ struct AgentProps {
 	volga: Option<messages::Float64>,
 }
 
-fn lena_callback(ctx: &ArcContext<AgentProps>, message: Message) -> Result<(), DimasError> {
+fn lena_callback(ctx: &ArcContext<AgentProps>, message: Message) -> Result<()> {
 	let value: messages::WrenchStamped = message.decode()?;
 	info!("received: '{}'", &value);
 	ctx.write().expect("should not happen").lena = Some(value);
 	Ok(())
 }
 
-fn murray_callback(ctx: &ArcContext<AgentProps>, message: Message) -> Result<(), DimasError> {
+fn murray_callback(ctx: &ArcContext<AgentProps>, message: Message) -> Result<()> {
 	let value: messages::Vector3Stamped = message.decode()?;
 	info!("received: '{}'", &value);
 	ctx.write().expect("should not happen").murray = Some(value);
@@ -34,7 +34,7 @@ fn murray_callback(ctx: &ArcContext<AgentProps>, message: Message) -> Result<(),
 }
 
 #[tokio::main]
-async fn main() -> Result<(), DimasError> {
+async fn main() -> Result<()> {
 	tracing_subscriber::fmt::init();
 
 	let properties = AgentProps::default();
@@ -58,12 +58,11 @@ async fn main() -> Result<(), DimasError> {
 		.timer()
 		.name("timer")
 		.interval(Duration::from_millis(50))
-		.callback(|ctx| -> Result<(), DimasError> {
+		.callback(|ctx| -> Result<()> {
 			let message = messages::Float64::random();
 			let value = message.data;
-			ctx.put_with("volga", &message)?;
-			ctx.write()?.volga = Some(message);
-			// just to see what value has been sent
+			ctx.write()?.volga = Some(message.clone());
+			ctx.put_with("volga", message)?;
 			info!("sent: '{value}'");
 			Ok(())
 		})

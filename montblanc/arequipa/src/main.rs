@@ -16,7 +16,7 @@ struct AgentProps {
 	file: File,
 }
 
-fn arkansas_callback(ctx: &ArcContext<AgentProps>, message: Message) -> Result<(), DimasError> {
+fn arkansas_callback(ctx: &ArcContext<AgentProps>, message: Message) -> Result<()> {
 	let value: messages::StringMsg = message.decode()?;
 	info!("received: '{}'", &value.data);
 	let final_data = format!("{}\n", value.data);
@@ -29,7 +29,7 @@ fn arkansas_callback(ctx: &ArcContext<AgentProps>, message: Message) -> Result<(
 }
 
 #[tokio::main(flavor = "current_thread")]
-async fn main() -> Result<(), DimasError> {
+async fn main() -> Result<()> {
 	tracing_subscriber::fmt::init();
 
 	let file = File::create(OUT_FILE).unwrap_or_else(|_| {
@@ -37,7 +37,7 @@ async fn main() -> Result<(), DimasError> {
 		panic!("Could not create {OUT_FILE}");
 	});
 	let properties = AgentProps { file };
-	let mut agent = Agent::new(Config::local(), properties)?;
+	let mut agent = Agent::new(Config::local()?, properties)?;
 
 	agent
 		.subscriber()

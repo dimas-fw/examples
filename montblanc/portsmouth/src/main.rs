@@ -12,7 +12,7 @@ use tracing::info;
 struct AgentProps {}
 
 #[tokio::main]
-async fn main() -> Result<(), DimasError> {
+async fn main() -> Result<()> {
 	tracing_subscriber::fmt::init();
 
 	let properties = AgentProps {};
@@ -24,12 +24,11 @@ async fn main() -> Result<(), DimasError> {
 		.timer()
 		.name("timer")
 		.interval(Duration::from_millis(200))
-		.callback(move |ctx| -> Result<(), DimasError> {
+		.callback(move |ctx| -> Result<()> {
 			let value = "portsmouth/danube: ".to_string() + &messages::random_string(55);
 			let message = messages::StringMsg { data: value };
-			ctx.put_with("danube", &message)?;
-			// just to see what value has been sent
-			info!("sent: '{message}'");
+			info!("sent: '{}'", &message);
+			ctx.put_with("danube", message)?;
 			Ok(())
 		})
 		.add()?;
