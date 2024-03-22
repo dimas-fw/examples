@@ -11,14 +11,14 @@ use tracing::info;
 #[derive(Debug)]
 struct AgentProps {}
 
-#[tokio::main(flavor = "current_thread")]
+#[tokio::main]
 async fn main() -> Result<()> {
 	tracing_subscriber::fmt::init();
 
 	let properties = AgentProps {};
-	let mut agent = Agent::new(Config::local()?, properties)?;
+	let agent = Agent::new(properties).config(Config::local()?)?;
 
-	agent.publisher().msg_type("chenab").add()?;
+	agent.publisher().topic("chenab").add()?;
 
 	agent
 		.timer()

@@ -28,7 +28,7 @@ fn arkansas_callback(ctx: &ArcContext<AgentProps>, message: Message) -> Result<(
 	Ok(())
 }
 
-#[tokio::main(flavor = "current_thread")]
+#[tokio::main]
 async fn main() -> Result<()> {
 	tracing_subscriber::fmt::init();
 
@@ -37,12 +37,12 @@ async fn main() -> Result<()> {
 		panic!("Could not create {OUT_FILE}");
 	});
 	let properties = AgentProps { file };
-	let mut agent = Agent::new(Config::local()?, properties)?;
+	let agent = Agent::new(properties).config(Config::local()?)?;
 
 	agent
 		.subscriber()
 		.put_callback(arkansas_callback)
-		.msg_type("arkansas")
+		.topic("arkansas")
 		.add()?;
 
 	agent.start().await?;

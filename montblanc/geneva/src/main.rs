@@ -57,32 +57,32 @@ async fn main() -> Result<()> {
 	tracing_subscriber::fmt::init();
 
 	let properties = AgentProps::default();
-	let mut agent = Agent::new(Config::default(), properties)?;
+	let agent = Agent::new(properties).config(Config::default())?;
 
-	agent.publisher().msg_type("arkansas").add()?;
+	agent.publisher().topic("arkansas").add()?;
 
 	agent
 		.subscriber()
 		.put_callback(parana_callback)
-		.msg_type("parana")
+		.topic("parana")
 		.add()?;
 
 	agent
 		.subscriber()
 		.put_callback(danube_callback)
-		.msg_type("danube")
+		.topic("danube")
 		.add()?;
 
 	agent
 		.subscriber()
 		.put_callback(tagus_callback)
-		.msg_type("tagus")
+		.topic("tagus")
 		.add()?;
 
 	agent
 		.subscriber()
 		.put_callback(congo_callback)
-		.msg_type("congo")
+		.topic("congo")
 		.add()?;
 
 	agent.start().await?;

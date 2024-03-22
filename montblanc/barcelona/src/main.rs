@@ -29,19 +29,19 @@ fn mekong_callback(ctx: &ArcContext<AgentProps>, message: Message) -> Result<()>
 	Ok(())
 }
 
-#[tokio::main(flavor = "current_thread")]
+#[tokio::main]
 async fn main() -> Result<()> {
 	tracing_subscriber::fmt::init();
 
 	let properties = AgentProps::default();
-	let mut agent = Agent::new(Config::default(), properties)?;
+	let agent = Agent::new(properties).config(Config::default())?;
 
-	agent.publisher().msg_type("mekong").add()?;
+	agent.publisher().topic("mekong").add()?;
 
 	agent
 		.subscriber()
 		.put_callback(mekong_callback)
-		.msg_type("mekong")
+		.topic("mekong")
 		.add()?;
 
 	agent.start().await?;

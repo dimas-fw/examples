@@ -106,64 +106,64 @@ async fn main() -> Result<()> {
 	tracing_subscriber::fmt::init();
 
 	let properties = AgentProps::default();
-	let mut agent = Agent::new(Config::default(), properties)?;
+	let agent = Agent::new(properties).config(Config::default())?;
 
-	agent.publisher().msg_type("congo").add()?;
+	agent.publisher().topic("congo").add()?;
 
-	agent.publisher().msg_type("mekong").add()?;
+	agent.publisher().topic("mekong").add()?;
 
 	agent
 		.subscriber()
 		.put_callback(danube_callback)
-		.msg_type("danube")
+		.topic("danube")
 		.add()?;
 
 	agent
 		.subscriber()
 		.put_callback(tagus_callback)
-		.msg_type("tagus")
+		.topic("tagus")
 		.add()?;
 
 	agent
 		.subscriber()
 		.put_callback(missouri_callback)
-		.msg_type("missouri")
+		.topic("missouri")
 		.add()?;
 
 	agent
 		.subscriber()
 		.put_callback(brazos_callback)
-		.msg_type("brazos")
+		.topic("brazos")
 		.add()?;
 
 	agent
 		.subscriber()
 		.put_callback(yamuna_callback)
-		.msg_type("yamuna")
+		.topic("yamuna")
 		.add()?;
 
 	agent
 		.subscriber()
 		.put_callback(godavari_callback)
-		.msg_type("godavari")
+		.topic("godavari")
 		.add()?;
 
 	agent
 		.subscriber()
 		.put_callback(loire_callback)
-		.msg_type("loire")
+		.topic("loire")
 		.add()?;
 
 	agent
 		.subscriber()
 		.put_callback(ohio_callback)
-		.msg_type("ohio")
+		.topic("ohio")
 		.add()?;
 
 	agent
 		.subscriber()
 		.put_callback(volga_callback)
-		.msg_type("volga")
+		.topic("volga")
 		.add()?;
 
 	agent.start().await?;

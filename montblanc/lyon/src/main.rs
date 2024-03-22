@@ -17,19 +17,19 @@ fn amazon_callback(ctx: &ArcContext<AgentProps>, message: Message) -> Result<()>
 	Ok(())
 }
 
-#[tokio::main(flavor = "current_thread")]
+#[tokio::main]
 async fn main() -> Result<()> {
 	tracing_subscriber::fmt::init();
 
 	let properties = AgentProps {};
-	let mut agent = Agent::new(Config::local()?, properties)?;
+	let agent = Agent::new(properties).config(Config::local()?)?;
 
-	agent.publisher().msg_type("tigris").add()?;
+	agent.publisher().topic("tigris").add()?;
 
 	agent
 		.subscriber()
 		.put_callback(amazon_callback)
-		.msg_type("amazon")
+		.topic("amazon")
 		.add()?;
 
 	agent.start().await?;

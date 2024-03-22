@@ -19,19 +19,19 @@ fn columbia_callback(ctx: &ArcContext<AgentProps>, message: Message) -> Result<(
 	Ok(())
 }
 
-#[tokio::main(flavor = "current_thread")]
+#[tokio::main]
 async fn main() -> Result<()> {
 	tracing_subscriber::fmt::init();
 
 	let properties = AgentProps {};
-	let mut agent = Agent::new(Config::local()?, properties)?;
+	let agent = Agent::new(properties).config(Config::local()?)?;
 
-	agent.publisher().msg_type("colorado").add()?;
+	agent.publisher().topic("colorado").add()?;
 
 	agent
 		.subscriber()
 		.put_callback(columbia_callback)
-		.msg_type("columbia")
+		.topic("columbia")
 		.add()?;
 
 	agent.start().await?;

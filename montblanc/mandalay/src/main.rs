@@ -75,49 +75,49 @@ async fn main() -> Result<()> {
 	tracing_subscriber::fmt::init();
 
 	let properties = AgentProps::default();
-	let mut agent = Agent::new(Config::default(), properties)?;
+	let agent = Agent::new(properties).config(Config::default())?;
 
 	agent
 		.subscriber()
 		.put_callback(danube_callback)
-		.msg_type("danube")
+		.topic("danube")
 		.add()?;
 
 	agent
 		.subscriber()
 		.put_callback(chenab_callback)
-		.msg_type("chenab")
+		.topic("chenab")
 		.add()?;
 
 	agent
 		.subscriber()
 		.put_callback(salween_callback)
-		.msg_type("salween")
+		.topic("salween")
 		.add()?;
 
 	agent
 		.subscriber()
 		.put_callback(godavari_callback)
-		.msg_type("godavari")
+		.topic("godavari")
 		.add()?;
 
 	agent
 		.subscriber()
 		.put_callback(yamuna_callback)
-		.msg_type("yamuna")
+		.topic("yamuna")
 		.add()?;
 
 	agent
 		.subscriber()
 		.put_callback(loire_callback)
-		.msg_type("loire")
+		.topic("loire")
 		.add()?;
 
-	agent.publisher().msg_type("tagus").add()?;
+	agent.publisher().topic("tagus").add()?;
 
-	agent.publisher().msg_type("missouri").add()?;
+	agent.publisher().topic("missouri").add()?;
 
-	agent.publisher().msg_type("brazos").add()?;
+	agent.publisher().topic("brazos").add()?;
 
 	agent
 		.timer()

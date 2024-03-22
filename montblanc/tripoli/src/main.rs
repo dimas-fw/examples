@@ -37,21 +37,21 @@ async fn main() -> Result<()> {
 	tracing_subscriber::fmt::init();
 
 	let properties = AgentProps::default();
-	let mut agent = Agent::new(Config::local()?, properties)?;
+	let agent = Agent::new(properties).config(Config::local()?)?;
 
 	agent
 		.subscriber()
 		.put_callback(columbia_callback)
-		.msg_type("columbia")
+		.topic("columbia")
 		.add()?;
 
 	agent
 		.subscriber()
 		.put_callback(godavari_callback)
-		.msg_type("godavari")
+		.topic("godavari")
 		.add()?;
 
-	agent.publisher().msg_type("loire").add()?;
+	agent.publisher().topic("loire").add()?;
 
 	agent.start().await?;
 	Ok(())

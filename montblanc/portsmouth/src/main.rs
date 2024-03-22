@@ -16,9 +16,9 @@ async fn main() -> Result<()> {
 	tracing_subscriber::fmt::init();
 
 	let properties = AgentProps {};
-	let mut agent = Agent::new(Config::default(), properties)?;
+	let agent = Agent::new(properties).config(Config::default())?;
 
-	agent.publisher().msg_type("danube").add()?;
+	agent.publisher().topic("danube").add()?;
 
 	agent
 		.timer()

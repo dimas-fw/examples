@@ -38,20 +38,20 @@ async fn main() -> Result<()> {
 	tracing_subscriber::fmt::init();
 
 	let properties = AgentProps::default();
-	let mut agent = Agent::new(Config::default(), properties)?;
+	let agent = Agent::new(properties).config(Config::default())?;
 
-	agent.publisher().msg_type("volga").add()?;
+	agent.publisher().topic("volga").add()?;
 
 	agent
 		.subscriber()
 		.put_callback(lena_callback)
-		.msg_type("lena")
+		.topic("lena")
 		.add()?;
 
 	agent
 		.subscriber()
 		.put_callback(murray_callback)
-		.msg_type("murray")
+		.topic("murray")
 		.add()?;
 
 	agent
