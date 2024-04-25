@@ -13,7 +13,7 @@ struct AgentProps {}
 
 #[tokio::main]
 async fn main() -> Result<()> {
-	tracing_subscriber::fmt::init();
+	init_tracing();
 
 	let properties = AgentProps {};
 	let agent = Agent::new(properties).config(Config::local()?)?;

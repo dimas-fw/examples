@@ -30,7 +30,7 @@ fn arkansas_callback(ctx: &ArcContext<AgentProps>, message: Message) -> Result<(
 
 #[tokio::main]
 async fn main() -> Result<()> {
-	tracing_subscriber::fmt::init();
+	init_tracing();
 
 	let file = File::create(OUT_FILE).unwrap_or_else(|_| {
 		error!("Could not create {OUT_FILE}");

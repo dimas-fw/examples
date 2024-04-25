@@ -34,7 +34,7 @@ fn godavari_callback(ctx: &ArcContext<AgentProps>, message: Message) -> Result<(
 
 #[tokio::main]
 async fn main() -> Result<()> {
-	tracing_subscriber::fmt::init();
+	init_tracing();
 
 	let properties = AgentProps::default();
 	let agent = Agent::new(properties).config(Config::local()?)?;
