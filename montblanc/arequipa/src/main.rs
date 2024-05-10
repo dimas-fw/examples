@@ -9,6 +9,10 @@ use std::fs::File;
 use std::io::Write;
 use tracing::{error, info};
 
+#[cfg(target_os = "windows")]
+static OUT_FILE: &str = "c:/tmp/montblanc.out";
+
+#[cfg(not(target_os = "windows"))]
 static OUT_FILE: &str = "/tmp/montblanc.out";
 
 #[derive(Debug)]
@@ -37,7 +41,7 @@ async fn main() -> Result<()> {
 		panic!("Could not create {OUT_FILE}");
 	});
 	let properties = AgentProps { file };
-	let agent = Agent::new(properties).config(Config::local()?)?;
+	let agent = Agent::new(properties).config(&Config::local()?)?;
 
 	agent
 		.subscriber()

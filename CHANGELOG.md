@@ -16,6 +16,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Removed
 
 
+## [0.2.0] - 2024-??-??
+
+### Changed
+- Adopted to `dimas` version 0.2
+
+### Fixed
+- Path to tmp directory for Windows
+
 ## [0.0.5] - 2024-04-25
 
 ### Changed

@@ -22,7 +22,7 @@ async fn main() -> Result<()> {
 	init_tracing();
 
 	let properties = AgentProps {};
-	let agent = Agent::new(properties).config(Config::local()?)?;
+	let agent = Agent::new(properties).config(&Config::local()?)?;
 
 	agent.publisher().topic("tigris").add()?;
 

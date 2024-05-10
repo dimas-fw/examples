@@ -106,7 +106,7 @@ async fn main() -> Result<()> {
 	init_tracing();
 
 	let properties = AgentProps::default();
-	let agent = Agent::new(properties).config(Config::default())?;
+	let agent = Agent::new(properties).config(&Config::default())?;
 
 	agent.publisher().topic("congo").add()?;
 
