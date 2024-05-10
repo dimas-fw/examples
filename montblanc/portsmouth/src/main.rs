@@ -16,7 +16,7 @@ async fn main() -> Result<()> {
 	init_tracing();
 
 	let properties = AgentProps {};
-	let agent = Agent::new(properties).config(&Config::default())?;
+	let agent = Agent::new(properties).name("portsmouth").config(&Config::default())?;
 
 	agent.publisher().topic("danube").add()?;
 

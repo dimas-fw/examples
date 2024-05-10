@@ -54,7 +54,7 @@ async fn main() -> Result<()> {
 	init_tracing();
 
 	let properties = AgentProps::default();
-	let agent = Agent::new(properties).config(&Config::local()?)?;
+	let agent = Agent::new(properties).name("osaka").config(&Config::local()?)?;
 
 	agent
 		.subscriber()

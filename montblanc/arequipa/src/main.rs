@@ -41,7 +41,7 @@ async fn main() -> Result<()> {
 		panic!("Could not create {OUT_FILE}");
 	});
 	let properties = AgentProps { file };
-	let agent = Agent::new(properties).config(&Config::local()?)?;
+	let agent = Agent::new(properties).name("arequipa").config(&Config::local()?)?;
 
 	agent
 		.subscriber()
