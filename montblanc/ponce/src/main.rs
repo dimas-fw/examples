@@ -106,7 +106,10 @@ async fn main() -> Result<()> {
 	init_tracing();
 
 	let properties = AgentProps::default();
-	let agent = Agent::new(properties).name("ponce").config(&Config::default())?;
+	let agent = Agent::new(properties)
+		.name("ponce")
+		.prefix("robot")
+		.config(&Config::default())?;
 
 	agent.publisher().topic("congo").add()?;
 
@@ -157,13 +160,13 @@ async fn main() -> Result<()> {
 	agent
 		.subscriber()
 		.put_callback(ohio_callback)
-		.topic("ohio")
+		.key_expr("workstation/ohio")
 		.add()?;
 
 	agent
 		.subscriber()
 		.put_callback(volga_callback)
-		.topic("volga")
+		.key_expr("workstation/volga")
 		.add()?;
 
 	agent.start().await?;

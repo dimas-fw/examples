@@ -75,7 +75,10 @@ async fn main() -> Result<()> {
 	init_tracing();
 
 	let properties = AgentProps::default();
-	let agent = Agent::new(properties).name("mandalay").config(&Config::default())?;
+	let agent = Agent::new(properties)
+		.name("mandalay")
+		.prefix("robot")
+		.config(&Config::default())?;
 
 	agent
 		.subscriber()

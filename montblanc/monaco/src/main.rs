@@ -27,14 +27,17 @@ async fn main() -> Result<()> {
 	init_tracing();
 
 	let properties = AgentProps::default();
-	let agent = Agent::new(properties).name("monaco").config(&Config::default())?;
+	let agent = Agent::new(properties)
+		.name("monaco")
+		.prefix("workstation")
+		.config(&Config::default())?;
 
 	agent.publisher().topic("ohio").add()?;
 
 	agent
 		.subscriber()
 		.put_callback(congo_callback)
-		.topic("congo")
+		.key_expr("robot/congo")
 		.add()?;
 
 	agent.start().await?;

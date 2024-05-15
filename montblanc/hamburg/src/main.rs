@@ -55,7 +55,10 @@ async fn main() -> Result<()> {
 	init_tracing();
 
 	let properties = AgentProps::default();
-	let agent = Agent::new(properties).name("hamburg").config(&Config::default())?;
+	let agent = Agent::new(properties)
+		.name("hamburg")
+		.prefix("robot")
+		.config(&Config::default())?;
 
 	agent.publisher().topic("parana").add()?;
 

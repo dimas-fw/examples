@@ -20,6 +20,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Changed
 - Adopted to `dimas` version 0.2
+- Use different prefixes for robot & workstation agents
 
 ### Fixed
 - Path to tmp directory for Windows

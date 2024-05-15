@@ -37,7 +37,10 @@ async fn main() -> Result<()> {
 	init_tracing();
 
 	let properties = AgentProps::default();
-	let agent = Agent::new(properties).name("tripoli").config(&Config::local()?)?;
+	let agent = Agent::new(properties)
+		.name("tripoli")
+		.prefix("robot")
+		.config(&Config::local()?)?;
 
 	agent
 		.subscriber()

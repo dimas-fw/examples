@@ -57,32 +57,35 @@ async fn main() -> Result<()> {
 	init_tracing();
 
 	let properties = AgentProps::default();
-	let agent = Agent::new(properties).name("geneva").config(&Config::default())?;
+	let agent = Agent::new(properties)
+		.name("geneva")
+		.prefix("workstation")
+		.config(&Config::default())?;
 
 	agent.publisher().topic("arkansas").add()?;
 
 	agent
 		.subscriber()
 		.put_callback(parana_callback)
-		.topic("parana")
+		.key_expr("robot/parana")
 		.add()?;
 
 	agent
 		.subscriber()
 		.put_callback(danube_callback)
-		.topic("danube")
+		.key_expr("robot/danube")
 		.add()?;
 
 	agent
 		.subscriber()
 		.put_callback(tagus_callback)
-		.topic("tagus")
+		.key_expr("robot/tagus")
 		.add()?;
 
 	agent
 		.subscriber()
 		.put_callback(congo_callback)
-		.topic("congo")
+		.key_expr("robot/congo")
 		.add()?;
 
 	agent.start().await?;
