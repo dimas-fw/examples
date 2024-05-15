@@ -20,7 +20,7 @@ struct AgentProps {
 	file: File,
 }
 
-fn arkansas_callback(ctx: &ArcContext<AgentProps>, message: Message) -> Result<()> {
+fn arkansas_callback(ctx: &Context<AgentProps>, message: Message) -> Result<()> {
 	let value: messages::StringMsg = message.decode()?;
 	info!("received: '{}'", &value.data);
 	let final_data = format!("{}\n", value.data);

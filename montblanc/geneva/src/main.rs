@@ -20,7 +20,7 @@ struct AgentProps {
 	congo: Option<messages::Twist>,
 }
 
-fn parana_callback(ctx: &ArcContext<AgentProps>, message: Message) -> Result<()> {
+fn parana_callback(ctx: &Context<AgentProps>, message: Message) -> Result<()> {
 	let value: messages::StringMsg = message.decode()?;
 	info!("received: '{}'", &value);
 	let msg = messages::StringMsg {
@@ -31,21 +31,21 @@ fn parana_callback(ctx: &ArcContext<AgentProps>, message: Message) -> Result<()>
 	Ok(())
 }
 
-fn danube_callback(ctx: &ArcContext<AgentProps>, message: Message) -> Result<()> {
+fn danube_callback(ctx: &Context<AgentProps>, message: Message) -> Result<()> {
 	let value: messages::StringMsg = message.decode()?;
 	info!("received: '{}'", &value);
 	ctx.write().expect("should not happen").danube = Some(value);
 	Ok(())
 }
 
-fn tagus_callback(ctx: &ArcContext<AgentProps>, message: Message) -> Result<()> {
+fn tagus_callback(ctx: &Context<AgentProps>, message: Message) -> Result<()> {
 	let value: messages::Pose = message.decode()?;
 	info!("received: '{}'", &value);
 	ctx.write().expect("should not happen").tagus = Some(value);
 	Ok(())
 }
 
-fn congo_callback(ctx: &ArcContext<AgentProps>, message: Message) -> Result<()> {
+fn congo_callback(ctx: &Context<AgentProps>, message: Message) -> Result<()> {
 	let value: messages::Twist = message.decode()?;
 	info!("received: '{}'", &value);
 	ctx.write().expect("should not happen").congo = Some(value);

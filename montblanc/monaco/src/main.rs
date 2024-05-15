@@ -13,7 +13,7 @@ use tracing::info;
 #[derive(Debug, Default)]
 struct AgentProps {}
 
-fn congo_callback(ctx: &ArcContext<AgentProps>, message: Message) -> Result<()> {
+fn congo_callback(ctx: &Context<AgentProps>, message: Message) -> Result<()> {
 	let value: messages::Twist = message.decode()?;
 	info!("received: '{}'", &value);
 	let msg = messages::Float32::random();
