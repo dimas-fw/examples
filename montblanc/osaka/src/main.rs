@@ -20,21 +20,21 @@ struct AgentProps {
 	colorado: Option<messages::Image>,
 }
 
-fn parana_callback(ctx: &Context<AgentProps>, message: Message) -> Result<()> {
+fn parana_callback(ctx: &ContextImpl<AgentProps>, message: Message) -> Result<()> {
 	let value: messages::StringMsg = message.decode()?;
 	info!("received: '{}'", &value);
 	ctx.write().expect("should not happen").parana = Some(value);
 	Ok(())
 }
 
-fn columbia_callback(ctx: &Context<AgentProps>, message: Message) -> Result<()> {
+fn columbia_callback(ctx: &ContextImpl<AgentProps>, message: Message) -> Result<()> {
 	let value: messages::Image = message.decode()?;
 	info!("received: '{}'", &value);
 	ctx.write().expect("should not happen").columbia = Some(value);
 	Ok(())
 }
 
-fn colorado_callback(ctx: &Context<AgentProps>, message: Message) -> Result<()> {
+fn colorado_callback(ctx: &ContextImpl<AgentProps>, message: Message) -> Result<()> {
 	let value: messages::Image = message.decode()?;
 	info!("received: '{}'", &value);
 	ctx.write().expect("should not happen").colorado = Some(value);

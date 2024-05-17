@@ -10,7 +10,7 @@ use tracing::info;
 #[derive(Debug)]
 struct AgentProps {}
 
-fn columbia_callback(ctx: &Context<AgentProps>, message: Message) -> Result<()> {
+fn columbia_callback(ctx: &ContextImpl<AgentProps>, message: Message) -> Result<()> {
 	let mut value: messages::Image = message.decode()?;
 	info!("received: '{}'", &value);
 	value.header.frame_id = value.header.frame_id.replace("Test", "Modified");
