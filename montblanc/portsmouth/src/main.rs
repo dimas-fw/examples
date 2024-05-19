@@ -31,6 +31,7 @@ async fn main() -> Result<()> {
 			let value = "portsmouth/danube: ".to_string() + &messages::random_string(55);
 			let message = messages::StringMsg { data: value };
 			info!("sent: '{}'", &message);
+			let message = Message::encode(&message);
 			ctx.put_with("danube", message)?;
 			Ok(())
 		})

@@ -15,7 +15,7 @@ struct AgentProps {
 	columbia: Option<messages::Image>,
 }
 
-fn columbia_callback(ctx: &ContextImpl<AgentProps>, message: Message) -> Result<()> {
+fn columbia_callback(ctx: &Context<AgentProps>, message: Message) -> Result<()> {
 	let value: messages::Image = message.decode()?;
 	// just to see what has been sent
 	info!("received: '{}'", &value);
@@ -23,11 +23,12 @@ fn columbia_callback(ctx: &ContextImpl<AgentProps>, message: Message) -> Result<
 	Ok(())
 }
 
-fn godavari_callback(ctx: &ContextImpl<AgentProps>, message: Message) -> Result<()> {
+fn godavari_callback(ctx: &Context<AgentProps>, message: Message) -> Result<()> {
 	let value: messages::LaserScan = message.decode()?;
 	info!("received: '{}'", &value);
 	let msg = messages::PointCloud2::random();
 	info!("received: '{}'", &msg);
+	let msg = Message::encode(&msg);
 	let _ = ctx.put_with("loire", msg);
 	Ok(())
 }

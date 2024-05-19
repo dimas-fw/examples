@@ -30,6 +30,7 @@ async fn main() -> Result<()> {
 		.callback(|ctx| -> Result<()> {
 			let message = messages::Image::random();
 			info!("sent: '{}'", &message);
+			let message = Message::encode(&message);
 			ctx.put_with("columbia", message)?;
 			Ok(())
 		})

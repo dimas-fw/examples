@@ -13,7 +13,7 @@ use tracing::info;
 #[derive(Debug, Default)]
 struct AgentProps {}
 
-fn mekong_callback(ctx: &ContextImpl<AgentProps>, message: Message) -> Result<()> {
+fn mekong_callback(ctx: &Context<AgentProps>, message: Message) -> Result<()> {
 	let value: messages::TwistWithCovarianceStamped = message.decode()?;
 	info!("received: '{}'", &value);
 	let msg = messages::Vector3Stamped {
@@ -21,6 +21,7 @@ fn mekong_callback(ctx: &ContextImpl<AgentProps>, message: Message) -> Result<()
 		vector: value.twist.twist.linear,
 	};
 	info!("sent: '{}'", &msg);
+	let msg = Message::encode(&msg);
 	let _ = ctx.put_with("murray", msg);
 	Ok(())
 }

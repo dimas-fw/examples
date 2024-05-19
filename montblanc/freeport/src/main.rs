@@ -30,6 +30,7 @@ async fn main() -> Result<()> {
 		.callback(|ctx| -> Result<()> {
 			let message = messages::Int64::random();
 			info!("sent: '{}'", &message);
+			let message = Message::encode(&message);
 			ctx.put_with("ganges", message)?;
 			Ok(())
 		})

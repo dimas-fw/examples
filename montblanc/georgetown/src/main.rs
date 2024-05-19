@@ -19,14 +19,14 @@ struct AgentProps {
 	volga: Option<messages::Float64>,
 }
 
-fn lena_callback(ctx: &ContextImpl<AgentProps>, message: Message) -> Result<()> {
+fn lena_callback(ctx: &Context<AgentProps>, message: Message) -> Result<()> {
 	let value: messages::WrenchStamped = message.decode()?;
 	info!("received: '{}'", &value);
 	ctx.write().expect("should not happen").lena = Some(value);
 	Ok(())
 }
 
-fn murray_callback(ctx: &ContextImpl<AgentProps>, message: Message) -> Result<()> {
+fn murray_callback(ctx: &Context<AgentProps>, message: Message) -> Result<()> {
 	let value: messages::Vector3Stamped = message.decode()?;
 	info!("received: '{}'", &value);
 	ctx.write().expect("should not happen").murray = Some(value);
@@ -65,6 +65,7 @@ async fn main() -> Result<()> {
 			let message = messages::Float64::random();
 			let value = message.data;
 			ctx.write()?.volga = Some(message.clone());
+			let message = Message::encode(&message);
 			ctx.put_with("volga", message)?;
 			info!("sent: '{value}'");
 			Ok(())

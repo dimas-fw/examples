@@ -13,11 +13,12 @@ use tracing::info;
 #[derive(Debug, Default)]
 struct AgentProps {}
 
-fn congo_callback(ctx: &ContextImpl<AgentProps>, message: Message) -> Result<()> {
+fn congo_callback(ctx: &Context<AgentProps>, message: Message) -> Result<()> {
 	let value: messages::Twist = message.decode()?;
 	info!("received: '{}'", &value);
 	let msg = messages::Float32::random();
 	info!("sent: '{}'", &msg);
+	let msg = Message::encode(&msg);
 	let _ = ctx.put_with("ohio", msg);
 	Ok(())
 }
