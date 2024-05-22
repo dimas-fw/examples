@@ -2,6 +2,8 @@
 # Copyright © 2024 Stephan Kunz
 # can be called with option `--release` to run release builds
 
+export ZENOH_RUNTIME='(app: (worker_threads: 2),tx: (max_blocking_threads: 1))'
+
 session="robot"
 
 tmux new-session -d -s $session
