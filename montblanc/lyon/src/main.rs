@@ -14,7 +14,7 @@ fn amazon_callback(ctx: &Context<AgentProps>, message: Message) -> Result<()> {
 	let value: messages::Float32 = message.decode()?;
 	info!("sent: '{}'", &value);
 	let value = Message::encode(&value);
-	let _ = ctx.put_with("tigris", value);
+	let _ = ctx.put("tigris", value);
 	Ok(())
 }
 

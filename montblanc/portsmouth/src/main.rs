@@ -32,7 +32,7 @@ async fn main() -> Result<()> {
 			let message = messages::StringMsg { data: value };
 			info!("sent: '{}'", &message);
 			let message = Message::encode(&message);
-			ctx.put_with("danube", message)?;
+			ctx.put("danube", message)?;
 			Ok(())
 		})
 		.add()?;

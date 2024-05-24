@@ -31,7 +31,7 @@ async fn main() -> Result<()> {
 			let message = messages::Float32::random();
 			info!("sent: '{}'", &message);
 			let message = Message::encode(&message);
-			ctx.put_with("amazon", message)?;
+			ctx.put("amazon", message)?;
 			Ok(())
 		})
 		.add()?;

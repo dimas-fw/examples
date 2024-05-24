@@ -31,7 +31,7 @@ async fn main() -> Result<()> {
 			let message = messages::Quaternion::random();
 			info!("sent: '{}'", &message);
 			let message = Message::encode(&message);
-			ctx.put_with("chenab", message)?;
+			ctx.put("chenab", message)?;
 			Ok(())
 		})
 		.add()?;

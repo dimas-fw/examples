@@ -28,7 +28,7 @@ fn parana_callback(ctx: &Context<AgentProps>, message: Message) -> Result<()> {
 	};
 	info!("sent: '{}'", &msg);
 	let msg = Message::encode(&msg);
-	let _ = ctx.put_with("arkansas", msg);
+	let _ = ctx.put("arkansas", msg);
 	Ok(())
 }
 

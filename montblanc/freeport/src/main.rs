@@ -31,7 +31,7 @@ async fn main() -> Result<()> {
 			let message = messages::Int64::random();
 			info!("sent: '{}'", &message);
 			let message = Message::encode(&message);
-			ctx.put_with("ganges", message)?;
+			ctx.put("ganges", message)?;
 			Ok(())
 		})
 		.add()?;

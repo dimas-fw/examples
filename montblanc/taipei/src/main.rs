@@ -16,7 +16,7 @@ fn columbia_callback(ctx: &Context<AgentProps>, message: Message) -> Result<()> 
 	value.header.frame_id = value.header.frame_id.replace("Test", "Modified");
 	info!("sent: '{}'", &value);
 	let value = Message::encode(&value);
-	let _ = ctx.put_with("colorado", value);
+	let _ = ctx.put("colorado", value);
 	Ok(())
 }
 

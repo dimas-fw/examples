@@ -19,7 +19,7 @@ fn congo_callback(ctx: &Context<AgentProps>, message: Message) -> Result<()> {
 	let msg = messages::Float32::random();
 	info!("sent: '{}'", &msg);
 	let msg = Message::encode(&msg);
-	let _ = ctx.put_with("ohio", msg);
+	let _ = ctx.put("ohio", msg);
 	Ok(())
 }
 

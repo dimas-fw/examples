@@ -130,7 +130,7 @@ async fn main() -> Result<()> {
 			let message = messages::Pose::random();
 			info!("sent: '{}'", &message);
 			let message = Message::encode(&message);
-			ctx.put_with("tagus", message)?;
+			ctx.put("tagus", message)?;
 			Ok(())
 		})
 		.add()?;
@@ -142,7 +142,7 @@ async fn main() -> Result<()> {
 		.callback(|ctx| -> Result<()> {
 			let message = messages::Image::random();
 			let message = Message::encode(&message);
-			ctx.put_with("missouri", message)?;
+			ctx.put("missouri", message)?;
 			info!("mandalay sent Image");
 			Ok(())
 		})
@@ -155,7 +155,7 @@ async fn main() -> Result<()> {
 		.callback(|ctx| -> Result<()> {
 			let message = messages::PointCloud2::random();
 			let message = Message::encode(&message);
-			ctx.put_with("brazos", message)?;
+			ctx.put("brazos", message)?;
 			info!("mandalay sent PointCloud2");
 			Ok(())
 		})

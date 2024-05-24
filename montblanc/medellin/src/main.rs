@@ -31,7 +31,7 @@ async fn main() -> Result<()> {
 			let message = messages::Int32::random();
 			info!("sent: '{}'", &message);
 			let message = Message::encode(&message);
-			ctx.put_with("nile", message)?;
+			ctx.put("nile", message)?;
 			Ok(())
 		})
 		.add()?;

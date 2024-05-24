@@ -22,7 +22,7 @@ fn mekong_callback(ctx: &Context<AgentProps>, message: Message) -> Result<()> {
 	};
 	info!("sent: '{}'", &msg);
 	let msg = Message::encode(&msg);
-	let _ = ctx.put_with("murray", msg);
+	let _ = ctx.put("murray", msg);
 	Ok(())
 }
 

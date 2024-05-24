@@ -59,12 +59,12 @@ fn brazos_callback(ctx: &Context<AgentProps>, message: Message) -> Result<()> {
 	let message = messages::Twist::random();
 	info!("sent: '{}'", &message);
 	let message = Message::encode(&message);
-	ctx.put_with("congo", message)?;
+	ctx.put("congo", message)?;
 
 	let message = messages::TwistWithCovarianceStamped::random();
 	info!("sent: '{}'", &message);
 	let message = Message::encode(&message);
-	ctx.put_with("mekong", message)?;
+	ctx.put("mekong", message)?;
 	Ok(())
 }
 

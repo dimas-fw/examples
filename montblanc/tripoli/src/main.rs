@@ -29,7 +29,7 @@ fn godavari_callback(ctx: &Context<AgentProps>, message: Message) -> Result<()> 
 	let msg = messages::PointCloud2::random();
 	info!("received: '{}'", &msg);
 	let msg = Message::encode(&msg);
-	let _ = ctx.put_with("loire", msg);
+	let _ = ctx.put("loire", msg);
 	Ok(())
 }
 

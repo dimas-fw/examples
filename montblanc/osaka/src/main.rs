@@ -42,12 +42,12 @@ fn colorado_callback(ctx: &Context<AgentProps>, message: Message) -> Result<()> 
 	let message = messages::PointCloud2::random();
 	info!("sent: '{}'", &message);
 	let message = Message::encode(&message);
-	ctx.put_with("salween", message)?;
+	ctx.put("salween", message)?;
 
 	let message = messages::LaserScan::random();
 	info!("sent: '{}'", &message);
 	let message = Message::encode(&message);
-	ctx.put_with("godavari", message)?;
+	ctx.put("godavari", message)?;
 	Ok(())
 }
 

@@ -66,7 +66,7 @@ async fn main() -> Result<()> {
 			let value = message.data;
 			ctx.write()?.volga = Some(message.clone());
 			let message = Message::encode(&message);
-			ctx.put_with("volga", message)?;
+			ctx.put("volga", message)?;
 			info!("sent: '{value}'");
 			Ok(())
 		})

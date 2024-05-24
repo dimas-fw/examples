@@ -47,7 +47,7 @@ fn danube_callback(ctx: &Context<AgentProps>, message: Message) -> Result<()> {
 	};
 	info!("sent: '{}'", &msg);
 	let msg = Message::encode(&msg);
-	let _ = ctx.put_with("parana", msg);
+	let _ = ctx.put("parana", msg);
 	Ok(())
 }
 
