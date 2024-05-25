@@ -38,7 +38,7 @@ async fn main() -> Result<()> {
 	agent
 		.subscriber()
 		.put_callback(congo_callback)
-		.key_expr("robot/congo")
+		.selector("robot/congo")
 		.add()?;
 
 	agent.start().await?;

@@ -162,13 +162,13 @@ async fn main() -> Result<()> {
 	agent
 		.subscriber()
 		.put_callback(ohio_callback)
-		.key_expr("workstation/ohio")
+		.selector("workstation/ohio")
 		.add()?;
 
 	agent
 		.subscriber()
 		.put_callback(volga_callback)
-		.key_expr("workstation/volga")
+		.selector("workstation/volga")
 		.add()?;
 
 	agent.start().await?;

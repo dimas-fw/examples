@@ -68,25 +68,25 @@ async fn main() -> Result<()> {
 	agent
 		.subscriber()
 		.put_callback(parana_callback)
-		.key_expr("robot/parana")
+		.selector("robot/parana")
 		.add()?;
 
 	agent
 		.subscriber()
 		.put_callback(danube_callback)
-		.key_expr("robot/danube")
+		.selector("robot/danube")
 		.add()?;
 
 	agent
 		.subscriber()
 		.put_callback(tagus_callback)
-		.key_expr("robot/tagus")
+		.selector("robot/tagus")
 		.add()?;
 
 	agent
 		.subscriber()
 		.put_callback(congo_callback)
-		.key_expr("robot/congo")
+		.selector("robot/congo")
 		.add()?;
 
 	agent.start().await?;
