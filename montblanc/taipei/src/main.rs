@@ -10,12 +10,13 @@ use tracing::info;
 #[derive(Debug)]
 struct AgentProps {}
 
-fn columbia_callback(ctx: &ArcContext<AgentProps>, message: Message) -> Result<()> {
+fn columbia_callback(ctx: &Context<AgentProps>, message: Message) -> Result<()> {
 	let mut value: messages::Image = message.decode()?;
 	info!("received: '{}'", &value);
 	value.header.frame_id = value.header.frame_id.replace("Test", "Modified");
 	info!("sent: '{}'", &value);
-	let _ = ctx.put_with("colorado", value);
+	let value = Message::encode(&value);
+	let _ = ctx.put("colorado", value);
 	Ok(())
 }
 
@@ -24,7 +25,10 @@ async fn main() -> Result<()> {
 	init_tracing();
 
 	let properties = AgentProps {};
-	let agent = Agent::new(properties).config(Config::local()?)?;
+	let agent = Agent::new(properties)
+		.name("taipei")
+		.prefix("robot")
+		.config(&Config::local()?)?;
 
 	agent.publisher().topic("colorado").add()?;
 

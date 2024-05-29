@@ -20,32 +20,34 @@ struct AgentProps {
 	colorado: Option<messages::Image>,
 }
 
-fn parana_callback(ctx: &ArcContext<AgentProps>, message: Message) -> Result<()> {
+fn parana_callback(ctx: &Context<AgentProps>, message: Message) -> Result<()> {
 	let value: messages::StringMsg = message.decode()?;
 	info!("received: '{}'", &value);
 	ctx.write().expect("should not happen").parana = Some(value);
 	Ok(())
 }
 
-fn columbia_callback(ctx: &ArcContext<AgentProps>, message: Message) -> Result<()> {
+fn columbia_callback(ctx: &Context<AgentProps>, message: Message) -> Result<()> {
 	let value: messages::Image = message.decode()?;
 	info!("received: '{}'", &value);
 	ctx.write().expect("should not happen").columbia = Some(value);
 	Ok(())
 }
 
-fn colorado_callback(ctx: &ArcContext<AgentProps>, message: Message) -> Result<()> {
+fn colorado_callback(ctx: &Context<AgentProps>, message: Message) -> Result<()> {
 	let value: messages::Image = message.decode()?;
 	info!("received: '{}'", &value);
 	ctx.write().expect("should not happen").colorado = Some(value);
 
 	let message = messages::PointCloud2::random();
 	info!("sent: '{}'", &message);
-	ctx.put_with("salween", message)?;
+	let message = Message::encode(&message);
+	ctx.put("salween", message)?;
 
 	let message = messages::LaserScan::random();
 	info!("sent: '{}'", &message);
-	ctx.put_with("godavari", message)?;
+	let message = Message::encode(&message);
+	ctx.put("godavari", message)?;
 	Ok(())
 }
 
@@ -54,7 +56,10 @@ async fn main() -> Result<()> {
 	init_tracing();
 
 	let properties = AgentProps::default();
-	let agent = Agent::new(properties).config(Config::local()?)?;
+	let agent = Agent::new(properties)
+		.name("osaka")
+		.prefix("robot")
+		.config(&Config::local()?)?;
 
 	agent
 		.subscriber()

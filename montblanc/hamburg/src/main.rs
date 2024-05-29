@@ -19,34 +19,35 @@ struct AgentProps {
 	tigris: f32,
 }
 
-fn tigris_callback(ctx: &ArcContext<AgentProps>, message: Message) -> Result<()> {
+fn tigris_callback(ctx: &Context<AgentProps>, message: Message) -> Result<()> {
 	let value: messages::Float32 = message.decode()?;
 	ctx.write().expect("should not happen").tigris = value.data;
 	info!("received: '{}'", &value);
 	Ok(())
 }
 
-fn ganges_callback(ctx: &ArcContext<AgentProps>, message: Message) -> Result<()> {
+fn ganges_callback(ctx: &Context<AgentProps>, message: Message) -> Result<()> {
 	let value: messages::Int64 = message.decode()?;
 	ctx.write().expect("should not happen").ganges = value.data;
 	info!("received: '{}'", &value);
 	Ok(())
 }
 
-fn nile_callback(ctx: &ArcContext<AgentProps>, message: Message) -> Result<()> {
+fn nile_callback(ctx: &Context<AgentProps>, message: Message) -> Result<()> {
 	let value: messages::Int32 = message.decode()?;
 	ctx.write().expect("should not happen").nile = value.data;
 	info!("received: '{}'", &value);
 	Ok(())
 }
 
-fn danube_callback(ctx: &ArcContext<AgentProps>, message: Message) -> Result<()> {
+fn danube_callback(ctx: &Context<AgentProps>, message: Message) -> Result<()> {
 	let value: messages::StringMsg = message.decode()?;
 	let msg = messages::StringMsg {
 		data: format!("hamburg/parana: {}", &value.data),
 	};
 	info!("sent: '{}'", &msg);
-	let _ = ctx.put_with("parana", msg);
+	let msg = Message::encode(&msg);
+	let _ = ctx.put("parana", msg);
 	Ok(())
 }
 
@@ -55,7 +56,10 @@ async fn main() -> Result<()> {
 	init_tracing();
 
 	let properties = AgentProps::default();
-	let agent = Agent::new(properties).config(Config::default())?;
+	let agent = Agent::new(properties)
+		.name("hamburg")
+		.prefix("robot")
+		.config(&Config::default())?;
 
 	agent.publisher().topic("parana").add()?;
 

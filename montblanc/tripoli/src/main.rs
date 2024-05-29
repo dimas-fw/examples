@@ -15,7 +15,7 @@ struct AgentProps {
 	columbia: Option<messages::Image>,
 }
 
-fn columbia_callback(ctx: &ArcContext<AgentProps>, message: Message) -> Result<()> {
+fn columbia_callback(ctx: &Context<AgentProps>, message: Message) -> Result<()> {
 	let value: messages::Image = message.decode()?;
 	// just to see what has been sent
 	info!("received: '{}'", &value);
@@ -23,12 +23,13 @@ fn columbia_callback(ctx: &ArcContext<AgentProps>, message: Message) -> Result<(
 	Ok(())
 }
 
-fn godavari_callback(ctx: &ArcContext<AgentProps>, message: Message) -> Result<()> {
+fn godavari_callback(ctx: &Context<AgentProps>, message: Message) -> Result<()> {
 	let value: messages::LaserScan = message.decode()?;
 	info!("received: '{}'", &value);
 	let msg = messages::PointCloud2::random();
 	info!("received: '{}'", &msg);
-	let _ = ctx.put_with("loire", msg);
+	let msg = Message::encode(&msg);
+	let _ = ctx.put("loire", msg);
 	Ok(())
 }
 
@@ -37,7 +38,10 @@ async fn main() -> Result<()> {
 	init_tracing();
 
 	let properties = AgentProps::default();
-	let agent = Agent::new(properties).config(Config::local()?)?;
+	let agent = Agent::new(properties)
+		.name("tripoli")
+		.prefix("robot")
+		.config(&Config::local()?)?;
 
 	agent
 		.subscriber()

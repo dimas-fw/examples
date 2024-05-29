@@ -9,6 +9,10 @@ use std::fs::File;
 use std::io::Write;
 use tracing::{error, info};
 
+#[cfg(target_os = "windows")]
+static OUT_FILE: &str = "c:/tmp/montblanc.out";
+
+#[cfg(not(target_os = "windows"))]
 static OUT_FILE: &str = "/tmp/montblanc.out";
 
 #[derive(Debug)]
@@ -16,7 +20,7 @@ struct AgentProps {
 	file: File,
 }
 
-fn arkansas_callback(ctx: &ArcContext<AgentProps>, message: Message) -> Result<()> {
+fn arkansas_callback(ctx: &Context<AgentProps>, message: Message) -> Result<()> {
 	let value: messages::StringMsg = message.decode()?;
 	info!("received: '{}'", &value.data);
 	let final_data = format!("{}\n", value.data);
@@ -37,7 +41,10 @@ async fn main() -> Result<()> {
 		panic!("Could not create {OUT_FILE}");
 	});
 	let properties = AgentProps { file };
-	let agent = Agent::new(properties).config(Config::local()?)?;
+	let agent = Agent::new(properties)
+		.name("arequipa")
+		.prefix("workstation")
+		.config(&Config::local()?)?;
 
 	agent
 		.subscriber()

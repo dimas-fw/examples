@@ -10,10 +10,11 @@ use tracing::info;
 #[derive(Debug)]
 struct AgentProps {}
 
-fn amazon_callback(ctx: &ArcContext<AgentProps>, message: Message) -> Result<()> {
+fn amazon_callback(ctx: &Context<AgentProps>, message: Message) -> Result<()> {
 	let value: messages::Float32 = message.decode()?;
 	info!("sent: '{}'", &value);
-	let _ = ctx.put_with("tigris", value);
+	let value = Message::encode(&value);
+	let _ = ctx.put("tigris", value);
 	Ok(())
 }
 
@@ -22,7 +23,10 @@ async fn main() -> Result<()> {
 	init_tracing();
 
 	let properties = AgentProps {};
-	let agent = Agent::new(properties).config(Config::local()?)?;
+	let agent = Agent::new(properties)
+		.name("lyon")
+		.prefix("robot")
+		.config(&Config::local()?)?;
 
 	agent.publisher().topic("tigris").add()?;
 

@@ -31,70 +31,72 @@ struct AgentProps {
 	volga: Option<messages::Float64>,
 }
 
-fn danube_callback(ctx: &ArcContext<AgentProps>, message: Message) -> Result<()> {
+fn danube_callback(ctx: &Context<AgentProps>, message: Message) -> Result<()> {
 	let value: messages::StringMsg = message.decode()?;
 	info!("received: '{}'", &value);
 	ctx.write().expect("should not happen").danube = Some(value);
 	Ok(())
 }
 
-fn tagus_callback(ctx: &ArcContext<AgentProps>, message: Message) -> Result<()> {
+fn tagus_callback(ctx: &Context<AgentProps>, message: Message) -> Result<()> {
 	let value: messages::Pose = message.decode()?;
 	info!("received: '{}'", &value);
 	ctx.write().expect("should not happen").tagus = Some(value);
 	Ok(())
 }
 
-fn missouri_callback(ctx: &ArcContext<AgentProps>, message: Message) -> Result<()> {
+fn missouri_callback(ctx: &Context<AgentProps>, message: Message) -> Result<()> {
 	let value: messages::Image = message.decode()?;
 	info!("received: '{}'", &value);
 	ctx.write().expect("should not happen").missouri = Some(value);
 	Ok(())
 }
 
-fn brazos_callback(ctx: &ArcContext<AgentProps>, message: Message) -> Result<()> {
+fn brazos_callback(ctx: &Context<AgentProps>, message: Message) -> Result<()> {
 	let value: messages::PointCloud2 = message.decode()?;
 	info!("received: '{}'", &value);
 
 	let message = messages::Twist::random();
 	info!("sent: '{}'", &message);
-	ctx.put_with("congo", message)?;
+	let message = Message::encode(&message);
+	ctx.put("congo", message)?;
 
 	let message = messages::TwistWithCovarianceStamped::random();
 	info!("sent: '{}'", &message);
-	ctx.put_with("mekong", message)?;
+	let message = Message::encode(&message);
+	ctx.put("mekong", message)?;
 	Ok(())
 }
 
-fn yamuna_callback(ctx: &ArcContext<AgentProps>, message: Message) -> Result<()> {
+fn yamuna_callback(ctx: &Context<AgentProps>, message: Message) -> Result<()> {
 	let value: messages::Vector3 = message.decode()?;
 	info!("received: '{}'", &value);
 	ctx.write().expect("should not happen").yamuna = Some(value);
 	Ok(())
 }
 
-fn godavari_callback(ctx: &ArcContext<AgentProps>, message: Message) -> Result<()> {
+fn godavari_callback(ctx: &Context<AgentProps>, message: Message) -> Result<()> {
 	let value: messages::LaserScan = message.decode()?;
 	info!("received: '{}'", &value);
 	ctx.write().expect("should not happen").godavari = Some(value);
 	Ok(())
 }
 
-fn loire_callback(ctx: &ArcContext<AgentProps>, message: Message) -> Result<()> {
+fn loire_callback(ctx: &Context<AgentProps>, message: Message) -> Result<()> {
 	let value: messages::PointCloud2 = message.decode()?;
 	info!("received: '{}'", &value);
 	ctx.write().expect("should not happen").loire = Some(value);
 	Ok(())
 }
 
-fn ohio_callback(ctx: &ArcContext<AgentProps>, message: Message) -> Result<()> {
+fn ohio_callback(ctx: &Context<AgentProps>, message: Message) -> Result<()> {
 	let value: messages::Float32 = message.decode()?;
 	info!("received: '{}'", &value);
 	ctx.write().expect("should not happen").ohio = Some(value);
 	Ok(())
 }
 
-fn volga_callback(ctx: &ArcContext<AgentProps>, message: Message) -> Result<()> {
+fn volga_callback(ctx: &Context<AgentProps>, message: Message) -> Result<()> {
 	let value: messages::Float64 = message.decode()?;
 	info!("received: '{}'", &value);
 	ctx.write().expect("should not happen").volga = Some(value);
@@ -106,7 +108,10 @@ async fn main() -> Result<()> {
 	init_tracing();
 
 	let properties = AgentProps::default();
-	let agent = Agent::new(properties).config(Config::default())?;
+	let agent = Agent::new(properties)
+		.name("ponce")
+		.prefix("robot")
+		.config(&Config::default())?;
 
 	agent.publisher().topic("congo").add()?;
 
@@ -157,13 +162,13 @@ async fn main() -> Result<()> {
 	agent
 		.subscriber()
 		.put_callback(ohio_callback)
-		.topic("ohio")
+		.selector("workstation/ohio")
 		.add()?;
 
 	agent
 		.subscriber()
 		.put_callback(volga_callback)
-		.topic("volga")
+		.selector("workstation/volga")
 		.add()?;
 
 	agent.start().await?;

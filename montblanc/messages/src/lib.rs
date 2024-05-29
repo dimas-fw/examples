@@ -517,9 +517,9 @@ impl Display for WrenchStamped {
 #[repr(C)]
 pub struct Image {
 	/// Header timestamp should be acquisition time of image
-	/// Header frame_id should be optical frame of camera
+	/// Header `frame_id` should be optical frame of camera
 	/// origin of frame should be optical center of cameara
-	/// If the frame_id here and the frame_id of the CameraInfo
+	/// If the `frame_id` here and the `frame_id` of the `CameraInfo`
 	/// message associated with the image conflict the behavior is undefined
 	pub header: Header,
 	/// Image height, that is, number of rows
@@ -582,7 +582,7 @@ impl Display for Image {
 pub struct LaserScan {
 	/// timestamp in the header is the acquisition time of
 	/// the first ray in the scan.
-	/// In frame frame_id, angles are measured around
+	/// In frame `frame_id`, angles are measured around
 	/// the positive Z axis (counterclockwise, if Z is up)
 	/// with zero angle being forward along the x axis
 	pub header: Header,
@@ -602,7 +602,7 @@ pub struct LaserScan {
 	pub range_min: f32,
 	/// Maximum range value in m
 	pub range_max: f32,
-	/// Range data in m (Note: values < range_min or > range_max should be discarded)
+	/// Range data in m (Note: values < `range_min` or > `range_max` should be discarded)
 	pub ranges: Vec<f32>,
 	/// Intensity data in device-specific units.
 	/// If your device does not provide intensities, please leave the array empty.
@@ -703,7 +703,7 @@ pub struct PointCloud2 {
 	pub point_step: u32,
 	/// Length of a row in bytes
 	pub row_step: u32,
-	/// Size is (row_step*height)
+	/// Size is `row_step * height`
 	pub data: Vec<u8>,
 	/// True if there are no invalid points
 	pub is_dense: bool,

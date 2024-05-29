@@ -28,42 +28,42 @@ struct AgentProps {
 	yamuna: Option<messages::Vector3>,
 }
 
-fn danube_callback(ctx: &ArcContext<AgentProps>, message: Message) -> Result<()> {
+fn danube_callback(ctx: &Context<AgentProps>, message: Message) -> Result<()> {
 	let value: messages::StringMsg = message.decode()?;
 	info!("received: '{}'", &value);
 	ctx.write().expect("should not happen").danube = Some(value);
 	Ok(())
 }
 
-fn chenab_callback(ctx: &ArcContext<AgentProps>, message: Message) -> Result<()> {
+fn chenab_callback(ctx: &Context<AgentProps>, message: Message) -> Result<()> {
 	let value: messages::Quaternion = message.decode()?;
 	info!("received: '{}'", &value);
 	ctx.write().expect("should not happen").chenab = Some(value);
 	Ok(())
 }
 
-fn salween_callback(ctx: &ArcContext<AgentProps>, message: Message) -> Result<()> {
+fn salween_callback(ctx: &Context<AgentProps>, message: Message) -> Result<()> {
 	let value: messages::PointCloud2 = message.decode()?;
 	info!("received: '{}'", &value);
 	ctx.write().expect("should not happen").salween = Some(value);
 	Ok(())
 }
 
-fn godavari_callback(ctx: &ArcContext<AgentProps>, message: Message) -> Result<()> {
+fn godavari_callback(ctx: &Context<AgentProps>, message: Message) -> Result<()> {
 	let value: messages::LaserScan = message.decode()?;
 	info!("received: '{}'", &value);
 	ctx.write().expect("should not happen").godavari = Some(value);
 	Ok(())
 }
 
-fn yamuna_callback(ctx: &ArcContext<AgentProps>, message: Message) -> Result<()> {
+fn yamuna_callback(ctx: &Context<AgentProps>, message: Message) -> Result<()> {
 	let value: messages::Vector3 = message.decode()?;
 	info!("received: '{}'", &value);
 	ctx.write().expect("should not happen").yamuna = Some(value);
 	Ok(())
 }
 
-fn loire_callback(ctx: &ArcContext<AgentProps>, message: Message) -> Result<()> {
+fn loire_callback(ctx: &Context<AgentProps>, message: Message) -> Result<()> {
 	let value: messages::PointCloud2 = message.decode()?;
 	info!("received: '{}'", &value);
 	ctx.write().expect("should not happen").loire = Some(value);
@@ -75,7 +75,10 @@ async fn main() -> Result<()> {
 	init_tracing();
 
 	let properties = AgentProps::default();
-	let agent = Agent::new(properties).config(Config::default())?;
+	let agent = Agent::new(properties)
+		.name("mandalay")
+		.prefix("robot")
+		.config(&Config::default())?;
 
 	agent
 		.subscriber()
@@ -126,7 +129,8 @@ async fn main() -> Result<()> {
 		.callback(|ctx| -> Result<()> {
 			let message = messages::Pose::random();
 			info!("sent: '{}'", &message);
-			ctx.put_with("tagus", message)?;
+			let message = Message::encode(&message);
+			ctx.put("tagus", message)?;
 			Ok(())
 		})
 		.add()?;
@@ -137,7 +141,8 @@ async fn main() -> Result<()> {
 		.interval(Duration::from_millis(100))
 		.callback(|ctx| -> Result<()> {
 			let message = messages::Image::random();
-			ctx.put_with("missouri", message)?;
+			let message = Message::encode(&message);
+			ctx.put("missouri", message)?;
 			info!("mandalay sent Image");
 			Ok(())
 		})
@@ -149,7 +154,8 @@ async fn main() -> Result<()> {
 		.interval(Duration::from_millis(100))
 		.callback(|ctx| -> Result<()> {
 			let message = messages::PointCloud2::random();
-			ctx.put_with("brazos", message)?;
+			let message = Message::encode(&message);
+			ctx.put("brazos", message)?;
 			info!("mandalay sent PointCloud2");
 			Ok(())
 		})

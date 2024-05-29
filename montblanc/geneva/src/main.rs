@@ -20,32 +20,33 @@ struct AgentProps {
 	congo: Option<messages::Twist>,
 }
 
-fn parana_callback(ctx: &ArcContext<AgentProps>, message: Message) -> Result<()> {
+fn parana_callback(ctx: &Context<AgentProps>, message: Message) -> Result<()> {
 	let value: messages::StringMsg = message.decode()?;
 	info!("received: '{}'", &value);
 	let msg = messages::StringMsg {
 		data: format!("geneva/arkansas: {}", &value),
 	};
 	info!("sent: '{}'", &msg);
-	let _ = ctx.put_with("arkansas", msg);
+	let msg = Message::encode(&msg);
+	let _ = ctx.put("arkansas", msg);
 	Ok(())
 }
 
-fn danube_callback(ctx: &ArcContext<AgentProps>, message: Message) -> Result<()> {
+fn danube_callback(ctx: &Context<AgentProps>, message: Message) -> Result<()> {
 	let value: messages::StringMsg = message.decode()?;
 	info!("received: '{}'", &value);
 	ctx.write().expect("should not happen").danube = Some(value);
 	Ok(())
 }
 
-fn tagus_callback(ctx: &ArcContext<AgentProps>, message: Message) -> Result<()> {
+fn tagus_callback(ctx: &Context<AgentProps>, message: Message) -> Result<()> {
 	let value: messages::Pose = message.decode()?;
 	info!("received: '{}'", &value);
 	ctx.write().expect("should not happen").tagus = Some(value);
 	Ok(())
 }
 
-fn congo_callback(ctx: &ArcContext<AgentProps>, message: Message) -> Result<()> {
+fn congo_callback(ctx: &Context<AgentProps>, message: Message) -> Result<()> {
 	let value: messages::Twist = message.decode()?;
 	info!("received: '{}'", &value);
 	ctx.write().expect("should not happen").congo = Some(value);
@@ -57,32 +58,35 @@ async fn main() -> Result<()> {
 	init_tracing();
 
 	let properties = AgentProps::default();
-	let agent = Agent::new(properties).config(Config::default())?;
+	let agent = Agent::new(properties)
+		.name("geneva")
+		.prefix("workstation")
+		.config(&Config::default())?;
 
 	agent.publisher().topic("arkansas").add()?;
 
 	agent
 		.subscriber()
 		.put_callback(parana_callback)
-		.topic("parana")
+		.selector("robot/parana")
 		.add()?;
 
 	agent
 		.subscriber()
 		.put_callback(danube_callback)
-		.topic("danube")
+		.selector("robot/danube")
 		.add()?;
 
 	agent
 		.subscriber()
 		.put_callback(tagus_callback)
-		.topic("tagus")
+		.selector("robot/tagus")
 		.add()?;
 
 	agent
 		.subscriber()
 		.put_callback(congo_callback)
-		.topic("congo")
+		.selector("robot/congo")
 		.add()?;
 
 	agent.start().await?;

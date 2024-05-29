@@ -13,7 +13,7 @@ use tracing::info;
 #[derive(Debug, Default)]
 struct AgentProps {}
 
-fn mekong_callback(ctx: &ArcContext<AgentProps>, message: Message) -> Result<()> {
+fn mekong_callback(ctx: &Context<AgentProps>, message: Message) -> Result<()> {
 	let value: messages::TwistWithCovarianceStamped = message.decode()?;
 	info!("received: '{}'", &value);
 	let wrench = messages::Wrench {
@@ -25,7 +25,8 @@ fn mekong_callback(ctx: &ArcContext<AgentProps>, message: Message) -> Result<()>
 		wrench,
 	};
 	info!("sent: '{}'", &msg);
-	let _ = ctx.put_with("lena", msg);
+	let msg = Message::encode(&msg);
+	let _ = ctx.put("lena", msg);
 	Ok(())
 }
 
@@ -34,14 +35,17 @@ async fn main() -> Result<()> {
 	init_tracing();
 
 	let properties = AgentProps::default();
-	let agent = Agent::new(properties).config(Config::default())?;
+	let agent = Agent::new(properties)
+		.name("barcelona")
+		.prefix("workstation")
+		.config(&Config::default())?;
 
 	agent.publisher().topic("mekong").add()?;
 
 	agent
 		.subscriber()
 		.put_callback(mekong_callback)
-		.topic("mekong")
+		.selector("robot/mekong")
 		.add()?;
 
 	agent.start().await?;

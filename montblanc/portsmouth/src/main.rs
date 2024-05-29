@@ -16,7 +16,10 @@ async fn main() -> Result<()> {
 	init_tracing();
 
 	let properties = AgentProps {};
-	let agent = Agent::new(properties).config(Config::default())?;
+	let agent = Agent::new(properties)
+		.name("portsmouth")
+		.prefix("robot")
+		.config(&Config::default())?;
 
 	agent.publisher().topic("danube").add()?;
 
@@ -28,7 +31,8 @@ async fn main() -> Result<()> {
 			let value = "portsmouth/danube: ".to_string() + &messages::random_string(55);
 			let message = messages::StringMsg { data: value };
 			info!("sent: '{}'", &message);
-			ctx.put_with("danube", message)?;
+			let message = Message::encode(&message);
+			ctx.put("danube", message)?;
 			Ok(())
 		})
 		.add()?;

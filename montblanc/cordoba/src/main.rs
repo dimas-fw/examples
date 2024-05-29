@@ -16,7 +16,10 @@ async fn main() -> Result<()> {
 	init_tracing();
 
 	let properties = AgentProps {};
-	let agent = Agent::new(properties).config(Config::local()?)?;
+	let agent = Agent::new(properties)
+		.name("cordoba")
+		.prefix("robot")
+		.config(&Config::local()?)?;
 
 	agent.publisher().topic("amazon").add()?;
 
@@ -27,7 +30,8 @@ async fn main() -> Result<()> {
 		.callback(|ctx| -> Result<()> {
 			let message = messages::Float32::random();
 			info!("sent: '{}'", &message);
-			ctx.put_with("amazon", message)?;
+			let message = Message::encode(&message);
+			ctx.put("amazon", message)?;
 			Ok(())
 		})
 		.add()?;
