@@ -1,6 +1,5 @@
 [package]
 name = "tripoli"
-rust-version.workspace = true
 edition.workspace = true
 version.workspace = true
 authors.workspace = true

@@ -7,7 +7,7 @@
 //!   - a `LaserScan` on the topic /godavari
 //!   - a `Vector3` on the topic /yamuna
 //!   - a `PointCloud2` on the topic /loire
-//! and publishes every 100ms
+//!     and publishes every 100ms
 //!   - a `Pose` on the topic /tagus
 //!   - an `Image` on the topic /missouri
 //!   - a `PointCloud2` on the topic /brazos

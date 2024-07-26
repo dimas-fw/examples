@@ -2,7 +2,7 @@
 
 //! The node 'monaco' subscribes to
 //!   - a `Twist` on the topic /congo
-//! and publishes on receive
+//!     and publishes on receive
 //!   - a `Float32` on the topic /ohio
 //!
 //! This source is part of `DiMAS` implementation of Montblanc benchmark for distributed systems

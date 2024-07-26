@@ -2,7 +2,7 @@
 
 //! The node 'rotterdam' subscribes to
 //!   - a `TwistWithCovarianceStamped` on the topic /mekong
-//! and publishes on receive
+//!     and publishes on receive
 //!   - a `Vector3Stamped` on the topic /murray
 //!
 //! This source is part of `DiMAS` implementation of Montblanc benchmark for distributed systems

@@ -10,7 +10,7 @@
 //!   - a `PointCloud2` on the topic /loire
 //!   - a `Float32` on the topic /ohio
 //!   - a `Float64` on the topic /volga
-//! and publishes on receive of tpoic /brazos
+//!     and publishes on receive of tpoic /brazos
 //!   - a `Twist` on the topic /congo
 //!   - a `TwistWithCovarianceStampe` on the topic /mekong
 //!

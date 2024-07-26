@@ -2,7 +2,7 @@
 
 //! The node 'barcelona' subscribes to
 //!   - a `TwistWithCovarianceStamed` on the topic /mekong
-//! and publishes on receive the Twist data as
+//!     and publishes on receive the Twist data as
 //!   - a `WrenchStamped` on the topic /lena
 //!
 //! This source is part of `DiMAS` implementation of Montblanc benchmark for distributed systems

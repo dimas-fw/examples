@@ -3,7 +3,7 @@
 //! The node 'georgetown' subscribes to
 //!   - a `WrenchStamped` on the topic /lena
 //!   - a `Vector3Stamped` on the topic /murray
-//! and publishes every 50ms
+//!     and publishes every 50ms
 //!   - a `Float64` on the topic /volga
 //!
 //! This source is part of `DiMAS` implementation of Montblanc benchmark for distributed systems
