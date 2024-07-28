@@ -5,7 +5,7 @@
 //!   - an Int64 on the topic /ganges
 //!   - an Int32 on the topic /nile
 //!   - a String on the topic /danube
-//! and publishes the on /danube received value on topic /parana
+//!     and publishes the on /danube received value on topic /parana
 //!
 //! This source is part of `DiMAS` implementation of Montblanc benchmark for distributed systems
 

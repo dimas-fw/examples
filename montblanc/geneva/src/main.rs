@@ -5,7 +5,7 @@
 //!   - a `StringMsg` on the topic /danube
 //!   - a `Pose` on the topic /tagus
 //!   - a `Twist` on the topic /congo
-//! and publishes on receive of topic /parana
+//!     and publishes on receive of topic /parana
 //!   - a `StringMsg` on the topic /arkansas
 //!
 //! This source is part of `DiMAS` implementation of Montblanc benchmark for distributed systems

@@ -4,7 +4,7 @@
 //!   - a `String` on the topic /parana
 //!   - an `Image` on the topic /columbia
 //!   - an `Image` on the topic /colorado
-//! and publishes on  receive of /colorado
+//!     and publishes on  receive of /colorado
 //!   - a `PointCloud2` on the topic /salween
 //!   - a `LaserScan` on the topic /godavari
 //!

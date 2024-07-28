@@ -16,7 +16,22 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Removed
 
 
-## [0.2.0] - 2024-??-??
+## [0.2.2] - 2024-07-27
+
+### Fixed
+- change of zenoh config syntax in provided config files
+
+## [0.2.1] - 2024-07-26
+
+### Changed
+- priority for lint definitions
+- indentation in doc comments
+
+### Removed
+- rust-version definition in Cargo.toml files
+
+
+## [0.2.0] - 2024-05-15
 
 ### Changed
 - Adopted to `dimas` version 0.2

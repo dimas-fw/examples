@@ -3,7 +3,7 @@
 //! The node 'tripoli' subscribes to
 //! - an `Image` on the topic /columbia
 //! - a `LaserScan` on the topic /godavari
-//! and publishes on receive of /godavari a `PointCloud2` on topic /loire
+//!   and publishes on receive of /godavari a `PointCloud2` on topic /loire
 //!
 //! This source is part of `DiMAS` implementation of Montblanc benchmark for distributed systems
 
