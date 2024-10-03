@@ -37,13 +37,14 @@ private_intra_doc_links = "allow"
 
 [workspace.lints.clippy]
 enum_glob_use = "deny"
+needless_pass_by_value = "allow"
 pedantic = { level = "deny", priority = -1 }
 nursery = { level = "deny", priority = -1 }
 unwrap_used = "deny"
 
 [workspace.package]
 edition = "2021"
-version = "0.2.2"
+version = "0.3.0"
 authors = [
 	"stepkun <stephan.kunz@kabelbw.de>",
 ]
@@ -57,7 +58,7 @@ categories = [
 ]
 
 [workspace.dependencies]
-dimas = "0.2"
+dimas = "0.3.0"
 #dimas = { path = "../../dimas/dimas"}
 tokio = "1"
 tracing = "0.1"

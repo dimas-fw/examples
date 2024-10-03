@@ -13,7 +13,7 @@ use tracing::info;
 #[derive(Debug, Default)]
 struct AgentProps {}
 
-fn mekong_callback(ctx: &Context<AgentProps>, message: Message) -> Result<()> {
+async fn mekong_callback(ctx: Context<AgentProps>, message: Message) -> Result<()> {
 	let value: messages::TwistWithCovarianceStamped = message.decode()?;
 	info!("received: '{}'", &value);
 	let wrench = messages::Wrench {

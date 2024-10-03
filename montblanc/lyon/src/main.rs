@@ -10,7 +10,7 @@ use tracing::info;
 #[derive(Debug)]
 struct AgentProps {}
 
-fn amazon_callback(ctx: &Context<AgentProps>, message: Message) -> Result<()> {
+async fn amazon_callback(ctx: Context<AgentProps>, message: Message) -> Result<()> {
 	let value: messages::Float32 = message.decode()?;
 	info!("sent: '{}'", &value);
 	let value = Message::encode(&value);
