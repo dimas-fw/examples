@@ -1,0 +1,31 @@
+# Copyright © 2024 Stephan Kunz
+[package]
+name = "router"
+edition = "2021"
+version = "0.3.0"
+authors = [
+	"stepkun <stephan.kunz@kabelbw.de>",
+]
+#license = "NGMC"
+license-file = "LICENSE"
+
+[lints.rust]
+unsafe_code = "forbid"
+missing_docs = "warn"
+#unused="allow" # for dev only
+
+[lints.rustdoc]
+private_intra_doc_links = "allow"
+
+[lints.clippy]
+enum_glob_use = "deny"
+needless_pass_by_value = "allow"
+pedantic = { level = "deny", priority = -1 }
+nursery = { level = "deny", priority = -1 }
+unwrap_used = "deny"
+
+[dependencies]
+dimas = { version = "0.3", features = ["unstable"] }
+tokio = { version = "1.0.0", features = ["macros"] }
+
+[dev-dependencies]

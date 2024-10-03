@@ -15,6 +15,18 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Removed
 
+## [0.3.1] - 2024-?-?
+
+### Added
+
+- example for a router (moved from [dimas/examples](https://github.com/dimas-fw/dimas/tree/main/examples))
+
+### Changed
+
+### Fixed
+
+### Removed
+
 ## [0.3.0] - 2024-10-03
 
 ### Changed
