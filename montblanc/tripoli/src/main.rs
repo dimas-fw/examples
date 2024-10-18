@@ -33,7 +33,7 @@ async fn godavari_callback(ctx: Context<AgentProps>, message: Message) -> Result
 	Ok(())
 }
 
-#[tokio::main(worker_threads = 3)]
+#[dimas::main]
 async fn main() -> Result<()> {
 	init_tracing();
 

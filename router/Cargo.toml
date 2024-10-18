@@ -25,7 +25,8 @@ nursery = { level = "deny", priority = -1 }
 unwrap_used = "deny"
 
 [dependencies]
-dimas = { version = "0.3", features = ["unstable"] }
-tokio = { version = "1.0.0", features = ["macros"] }
+#dimas = { version = "0.4.0", features = ["unstable"] }
+dimas = { path = "../../dimas/dimas", features = ["unstable"] }
+tokio = { version = "1.40.0", features = ["macros"] }
 
 [dev-dependencies]

@@ -11,7 +11,7 @@ use tracing::info;
 #[derive(Debug)]
 struct AgentProps {}
 
-#[tokio::main(worker_threads = 3)]
+#[dimas::main]
 async fn main() -> Result<()> {
 	init_tracing();
 
