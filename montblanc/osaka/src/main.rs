@@ -51,7 +51,7 @@ async fn colorado_callback(ctx: Context<AgentProps>, message: Message) -> Result
 	Ok(())
 }
 
-#[tokio::main]
+#[tokio::main(worker_threads = 3)]
 async fn main() -> Result<()> {
 	init_tracing();
 
