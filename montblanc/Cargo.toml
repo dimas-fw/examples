@@ -60,7 +60,6 @@ categories = [
 [workspace.dependencies]
 #dimas = "0.4.0"
 dimas = { path = "../../dimas/dimas" }
-tokio = { version = "1.40.0" }
 tracing = "0.1.37"
 tracing-subscriber = "0.3.0"
 

@@ -27,6 +27,5 @@ unwrap_used = "deny"
 [dependencies]
 #dimas = { version = "0.4.0", features = ["unstable"] }
 dimas = { path = "../../dimas/dimas", features = ["unstable"] }
-tokio = { version = "1.40.0" }
 
 [dev-dependencies]

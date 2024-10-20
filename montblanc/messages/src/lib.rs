@@ -4,7 +4,7 @@
 //! based on ros2 messages, see
 //! - <https://github.com/ros2/rcl_interfaces>
 //! - <https://github.com/ros2/common_interfaces>
-//! 
+//!
 //! should be modernized and moved into a separate crate
 
 use std::fmt::Display;
@@ -274,8 +274,8 @@ impl Display for Quaternion {
 }
 
 /// 3-Dimensional Vector message
-/// 
-/// Represents a vector in free space. 
+///
+/// Represents a vector in free space.
 /// This is semantically different than a point.
 /// A vector is always anchored at the origin.
 /// When a transform is applied to a vector, only the rotational component is applied.
@@ -309,7 +309,7 @@ impl Display for Vector3 {
 }
 
 /// 3D-Vector with Header
-/// 
+///
 /// Represents a Vector3 with reference coordinate frame and timestamp
 /// Note that this follows vector semantics with it always anchored at the origin,
 /// so the rotational elements of a transform are the only parts applied when transforming.
@@ -511,7 +511,7 @@ impl Display for WrenchStamped {
 }
 
 /// Image message
-/// 
+///
 /// Contains an uncompressed image
 /// (0, 0) is at top-left corner of image
 /// +x should point to the right in the image
@@ -577,7 +577,7 @@ impl Display for Image {
 }
 
 /// Laser Scan message
-/// 
+///
 /// Single scan from a planar laser range-finder
 /// If you have another ranging device with different behavior (e.g. a sonar
 /// array), please find or create a different message, since applications
@@ -684,7 +684,7 @@ pub struct PointField {
 }
 
 /// Point Cloud message
-/// 
+///
 /// This message holds a collection of N-dimensional points, which may
 /// contain additional information such as normals, intensity, etc. The
 /// point data is stored as a binary blob, its layout described by the
