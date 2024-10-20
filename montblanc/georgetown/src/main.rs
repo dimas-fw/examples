@@ -64,9 +64,9 @@ async fn main() -> Result<()> {
 		.callback(|ctx| -> Result<()> {
 			let message = messages::Float64::random();
 			let value = message.data;
-			ctx.write()?.volga = Some(message.clone());
-			let message = Message::encode(&message);
-			ctx.put("volga", message)?;
+			let msg = Message::encode(&message);
+			ctx.write()?.volga = Some(message);
+			ctx.put("volga", msg)?;
 			info!("sent: '{value}'");
 			Ok(())
 		})
