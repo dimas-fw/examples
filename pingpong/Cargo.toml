@@ -1,28 +1,29 @@
 # Copyright © 2024 Stephan Kunz
 [package]
-name = "router"
+name = "pingpong"
+rust-version = "1.81.0"
 edition = "2021"
-description = "Router example"
 license = "MIT OR Apache-2.0"
+description = "Ping/Pong example measuring the roundtrip time"
+publish = false
 
 [lints.rust]
 unsafe_code = "forbid"
 missing_docs = "warn"
-#unused="allow" # for dev only
 
-[lints.rustdoc]
-private_intra_doc_links = "allow"
+[[bin]]
+name = "ping"
+path = "src/ping.rs"
 
-[lints.clippy]
-enum_glob_use = "deny"
-needless_pass_by_value = "allow"
-pedantic = { level = "deny", priority = -1 }
-nursery = { level = "deny", priority = -1 }
-unwrap_used = "deny"
+[[bin]]
+name = "pong"
+path = "src/pong.rs"
 
 [dependencies]
+chrono = "0.4.34"
 #dimas = { version = "0.4.0", features = ["unstable"] }
 dimas = { path = "../../dimas/dimas", features = ["unstable"] }
+hostname = "0.4.0"
 
 [build-dependencies]
 

@@ -44,18 +44,7 @@ unwrap_used = "deny"
 
 [workspace.package]
 edition = "2021"
-version = "0.4.0"
-authors = [
-	"stepkun <stephan.kunz@kabelbw.de>",
-]
-#license = "NGMC"
-license-file = "LICENSE"
-keywords = ["robots", "robotics", "ros"]
-categories = [
-	"development-tools",
-	"science::robotics",
-	"simulation"
-]
+license = "MIT OR Apache-2.0"
 
 [workspace.dependencies]
 #dimas = "0.4.0"
