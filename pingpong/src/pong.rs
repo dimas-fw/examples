@@ -11,52 +11,49 @@ use pingpong::PingPongMessage;
 struct AgentProps {}
 
 async fn ping_received(_ctx: Context<AgentProps>, message: QueryMsg) -> Result<()> {
-	let mut query: PingPongMessage = message.decode()?;
+    let mut query: PingPongMessage = message.decode()?;
 
-	// set receive-timestamp
-	query.received = Local::now()
-		.naive_utc()
-		.and_utc()
-		.timestamp_nanos_opt();
+    // set receive-timestamp
+    query.received = Local::now().naive_utc().and_utc().timestamp_nanos_opt();
 
-	query.pong_name = hostname::get()?
-		.into_string()
-		.unwrap_or_else(|_| String::from("unknown host"));
+    query.pong_name = hostname::get()?
+        .into_string()
+        .unwrap_or_else(|_| String::from("unknown host"));
 
-	let text = format!("pong! [{}] to {}", query.counter, query.ping_name);
+    let text = format!("pong! [{}] to {}", query.counter, query.ping_name);
 
-	// reply to ping query
-	message.reply(query)?;
+    // reply to ping query
+    message.reply(query)?;
 
-	println!("response '{}'", &text);
+    println!("response '{}'", &text);
 
-	Ok(())
+    Ok(())
 }
 
 #[dimas::main]
 async fn main() -> Result<()> {
-	// initialize tracing/logging
-	init_tracing();
+    // initialize tracing/logging
+    init_tracing();
 
-	// create & initialize agents properties
-	let properties = AgentProps {};
+    // create & initialize agents properties
+    let properties = AgentProps {};
 
-	// create an agent with the properties and the prefix 'examples'
-	let mut agent = Agent::new(properties)
-		.prefix("examples")
-		.name("pong")
-		.config(&Config::default())?;
+    // create an agent with the properties and the prefix 'examples'
+    let mut agent = Agent::new(properties)
+        .prefix("examples")
+        .name("pong")
+        .config(&Config::default())?;
 
-	// listen for 'ping' messages
-	agent
-		.queryable()
-		.topic("pingpong")
-		.callback(ping_received)
-		.add()?;
+    // listen for 'ping' messages
+    agent
+        .queryable()
+        .topic("pingpong")
+        .callback(ping_received)
+        .add()?;
 
-	// activate liveliness
-	agent.liveliness(true);
-	agent.start().await?;
+    // activate liveliness
+    agent.liveliness(true);
+    agent.start().await?;
 
-	Ok(())
+    Ok(())
 }

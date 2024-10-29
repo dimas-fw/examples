@@ -8,6 +8,6 @@ use dimas::prelude::*;
 /// request structure for observer and observable
 #[derive(Debug, Encode, Decode)]
 pub struct FibonacciRequest {
-	/// limit
-	pub limit: u128,
+    /// limit
+    pub limit: u128,
 }
