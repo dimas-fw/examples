@@ -14,7 +14,7 @@ struct AgentProps {
 async fn hello_publishing(ctx: Context<AgentProps>, message: Message) -> Result<()> {
     let message: PubSubMessage = message.decode()?;
     let count = ctx.read()?.count;
-    if message.count != count {
+    if message.count != count && message.count > count {
         println!("missed {} messages", message.count - count);
         ctx.write()?.count = message.count;
     }
