@@ -1,9 +1,9 @@
-//! `DiMAS` zenoh-pico example
+//! `DiMAS` router example
 //! Copyright © 2024 Stephan Kunz
 
 use dimas::prelude::*;
 
-/// The Router's proerties
+/// The Router's properties
 #[derive(Debug)]
 pub struct RouterProps {}
 

@@ -1,4 +1,4 @@
-//! `DiMAS` pingpong example
+//! `DiMAS` ping example
 //! Copyright © 2024 Stephan Kunz
 
 // region:		--- modules

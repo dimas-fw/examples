@@ -1,0 +1,34 @@
+{
+  zenoh: {
+    mode: "peer",
+    listen: {
+      endpoints: [
+        "tcp/127.0.0.1:0",
+      ],
+    },
+    connect: {
+      endpoints: [
+        "tcp/127.0.0.1:0",
+      ],
+    },
+    scouting: {
+      multicast: {
+        enabled: true,
+        address: "224.0.0.224:7446",
+        interface: "auto",
+        autoconnect: { peer: ["router", "peer", "client"] },
+        listen: true,
+      },
+      gossip: {
+        enabled: true,
+        multihop: false,
+        autoconnect: { peer: ["router", "peer", "client"] },
+      },
+    },
+    transport: {
+      link: {
+        protocols: ["tcp"],
+      },
+    },
+  },
+}
