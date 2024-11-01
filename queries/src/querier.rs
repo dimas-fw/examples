@@ -1,4 +1,4 @@
-//! `DiMAS` query example
+//! `DiMAS` querier example
 //! Copyright © 2024 Stephan Kunz
 
 // region:		--- modules

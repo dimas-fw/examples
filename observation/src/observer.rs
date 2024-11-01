@@ -1,4 +1,4 @@
-//! `DiMAS` observation example
+//! `DiMAS` observer example
 //! Copyright © 2024 Stephan Kunz
 
 // region:		--- modules

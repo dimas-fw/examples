@@ -1,0 +1,10 @@
+{
+  zenoh: "#include ./zenoh_tls.json5",
+  sessions: [
+    { 
+      protocol: "zenoh",
+      name: "network",
+      config: "#include ./zenoh_network.json5",
+    },
+  ],
+}

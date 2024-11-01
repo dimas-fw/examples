@@ -1,8 +1,8 @@
 # Copyright © 2024 Stephan Kunz
 [package]
-name = "router"
+name = "sessions"
 edition = "2021"
-description = "Router example"
+description = "Sessions example"
 license = "MIT OR Apache-2.0"
 
 [lints.rust]
@@ -20,8 +20,25 @@ pedantic = { level = "deny", priority = -1 }
 nursery = { level = "deny", priority = -1 }
 unwrap_used = "deny"
 
+[[bin]]
+name = "agent1"
+path = "src/agent1.rs"
+
+[[bin]]
+name = "agent2"
+path = "src/agent2.rs"
+
+[[bin]]
+name = "agent3"
+path = "src/agent3.rs"
+
+[[bin]]
+name = "agent4"
+path = "src/agent4.rs"
+
 [dependencies]
-dimas = { version = "0.4.0", features = ["unstable"] }
+dimas = { version = "0.4.1", features = ["unstable"] }
+hostname = "0.4.0"
 
 [build-dependencies]
 

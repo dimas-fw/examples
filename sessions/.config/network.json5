@@ -1,0 +1,3 @@
+{
+  zenoh: "#include ./zenoh_network.json5",
+}
