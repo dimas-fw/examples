@@ -1,38 +1,4 @@
 {
-  zenoh: {
-    mode: "peer",
-    listen: {
-      endpoints: [
-        "tls/0.0.0.0:0",
-      ],
-    },
-    scouting: {
-      multicast: {
-        enabled: true,
-        address: "224.0.0.224:7446",
-        interface: "auto",
-        autoconnect: { peer: ["router", "peer", "client"] },
-        listen: true,
-      },
-      gossip: {
-        enabled: true,
-        multihop: false,
-        autoconnect: { peer: ["router", "peer", "client"] },
-      },
-    },
-    transport: {
-      link: {
-        protocols: ["tls"],
-        tls: {
-          enable_mtls: true,
-          root_ca_certificate: "./.config/minica.pem",
-          listen_private_key: "./.config/key.pem",
-          listen_certificate: "./.config/cert.pem",
-          connect_private_key: "./.config/key.pem",
-          connect_certificate: "./.config/cert.pem",
-          verify_name_on_connect: false,
-        },
-      },
-    },
-  },
+  zenoh: "#include ./zenoh_tls.json5",
+  sessions: [],
 }

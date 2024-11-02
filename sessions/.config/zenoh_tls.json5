@@ -1,0 +1,23 @@
+{
+  mode: "peer",
+  listen: {
+    endpoints: [
+      "tls/0.0.0.0:0",
+      "tls/:::0",
+    ],
+  },
+  transport: {
+    link: {
+      protocols: ["tls"],
+      tls: {
+        enable_mtls: true,
+        root_ca_certificate: "./.config/minica.pem",
+        listen_private_key: "./.config/key.pem",
+        listen_certificate: "./.config/cert.pem",
+        connect_private_key: "./.config/key.pem",
+        connect_certificate: "./.config/cert.pem",
+        verify_name_on_connect: false,
+      },
+    },
+  },
+}
