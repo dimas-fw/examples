@@ -1,4 +1,3 @@
 {
   zenoh: "#include ./zenoh_local.json5",
-  sessions: [],
 }
