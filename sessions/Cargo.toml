@@ -37,8 +37,7 @@ name = "agent4"
 path = "src/agent4.rs"
 
 [dependencies]
-#dimas = { version = "0.4.0", features = ["unstable"] }
-dimas = { path = "../../dimas/dimas", features = ["unstable"] }
+dimas = { version = "0.4.1", features = ["unstable"] }
 hostname = "0.4.0"
 
 [build-dependencies]
