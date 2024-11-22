@@ -12,3 +12,15 @@ Cargo.lock
 
 # MSVC Windows builds of rustc generate these, which store debugging information
 *.pdb
+
+# vscode stuff
+.vscode
+
+# profiling stuff
+cargo-timing*.html
+
+# things I want to ignore
+*.ignore
+
+# eclipse project files
+.project
