@@ -1,4 +1,4 @@
-//! `DiMAS` ppubsub example
+//! `DiMAS` pubsub example
 //! Copyright © 2024 Stephan Kunz
 
 // region:		--- modules
