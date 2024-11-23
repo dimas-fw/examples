@@ -1,0 +1,30 @@
+# Copyright © 2024 Stephan Kunz
+[package]
+name = "component"
+rust-version = "1.81.0"
+edition = "2021"
+license = "MIT OR Apache-2.0"
+description = "Component example"
+publish = false
+
+[lints.rust]
+unsafe_code = "deny"
+missing_docs = "warn"
+
+[lib]
+name = "components"
+path = "src/components.rs"
+crate-type = ["dylib"]
+
+[[bin]]
+name = "agent"
+path = "src/agent.rs"
+
+[dependencies]
+#dimas = { version = "0.4.2", features = ["unstable"] }
+dimas = { path = "../../../dimas/dimas", features = ["unstable"] }
+libloading = "0.8.5"
+
+[build-dependencies]
+
+[dev-dependencies]

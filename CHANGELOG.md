@@ -19,7 +19,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
-- examples for multi session agents (needs at least dimas v0.4.1)
+- example for multi session agents (needs at least dimas v0.4.1)
+- example for usage of components (needs at least dimas 0.4.2)
+
+### Changed
+
+- directory structure
 
 ### Removed
 
