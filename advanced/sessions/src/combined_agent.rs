@@ -34,8 +34,8 @@ async fn main() -> Result<()> {
     init_tracing();
 
     let mut agent1 = Agent::new(AgentProps (0))
-        .prefix("agent/tls")
-        .name("agent1")
+        .prefix("agent/tls")    // as TLS is the default session
+        .name("combined_agent")
         .config(&Config::from_file("combined.json5")?)?;
 
     agent1.publisher().topic("hostname").add()?;

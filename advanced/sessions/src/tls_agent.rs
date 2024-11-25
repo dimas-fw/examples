@@ -33,28 +33,28 @@ async fn receiver(ctx: Context<AgentProps>, message: Message) -> Result<()> {
 async fn main() -> Result<()> {
     init_tracing();
 
-    let mut agent2 = Agent::new(AgentProps(0))
-        .prefix("agent/tcp")
-        .name("agent2")
-        .config(&Config::from_file("network.json5")?)?;
+    let mut agent4 = Agent::new(AgentProps (0))
+        .prefix("agent/tls")
+        .name("tls_agent")
+        .config(&Config::from_file("tls.json5")?)?;
 
-    agent2.publisher().topic("hostname").add()?;
+    agent4.publisher().topic("hostname").add()?;
 
-    agent2
+    agent4
+        .subscriber()
+        .topic("hostname")
+        .put_callback(receiver)
+        .add()?;
+
+    agent4
         .timer()
         .name("timer")
         .interval(Duration::from_secs(10))
         .callback(sender)
         .add()?;
 
-    agent2
-        .subscriber()
-        .topic("hostname")
-        .put_callback(receiver)
-        .add()?;
-
-    agent2.liveliness(true);
-    agent2.start().await?;
+    agent4.liveliness(true);
+    agent4.start().await?;
 
     Ok(())
 }

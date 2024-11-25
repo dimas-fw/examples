@@ -35,7 +35,7 @@ async fn main() -> Result<()> {
 
     let mut agent3 = Agent::new(AgentProps(0))
         .prefix("agent/tcp")
-        .name("agent3")
+        .name("local_agent")
         .config(&Config::from_file("local.json5")?)?;
 
     agent3.publisher().topic("hostname").add()?;

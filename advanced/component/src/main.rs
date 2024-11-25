@@ -20,7 +20,7 @@ async fn main() -> Result<()> {
     let mut agent = Agent::new(properties)
         .prefix("examples")
         .name("agent")
-        .config(&Config::default())?;
+        .config(&Config::from_file("local.json5")?)?;
 
     agent.load_library("components")?;
 

@@ -21,20 +21,20 @@ nursery = { level = "deny", priority = -1 }
 unwrap_used = "deny"
 
 [[bin]]
-name = "agent1"
-path = "src/agent1.rs"
+name = "combined_agent"
+path = "src/combined_agent.rs"
 
 [[bin]]
-name = "agent2"
-path = "src/agent2.rs"
+name = "local_agent"
+path = "src/local_agent.rs"
 
 [[bin]]
-name = "agent3"
-path = "src/agent3.rs"
+name = "network_agent"
+path = "src/network_agent.rs"
 
 [[bin]]
-name = "agent4"
-path = "src/agent4.rs"
+name = "tls_agent"
+path = "src/tls_agent.rs"
 
 [dependencies]
 dimas = { version = "0.4.1", features = ["unstable"] }
