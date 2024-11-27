@@ -15,7 +15,7 @@ impl Component for ComponentA {
 }
 
 impl Operational for ComponentA {
-    fn manage_operation_state(&self, _state: &OperationState) -> Result<()> {
+    fn manage_operation_state(&self, _state: OperationState) -> Result<()> {
         Ok(())
     }
 }
@@ -30,7 +30,7 @@ impl Component for ComponentB {
 }
 
 impl Operational for ComponentB {
-    fn manage_operation_state(&self, _state: &OperationState) -> Result<()> {
+    fn manage_operation_state(&self, _state: OperationState) -> Result<()> {
         Ok(())
     }
 }
