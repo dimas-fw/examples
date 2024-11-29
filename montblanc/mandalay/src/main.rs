@@ -31,42 +31,42 @@ struct AgentProps {
 async fn danube_callback(ctx: Context<AgentProps>, message: Message) -> Result<()> {
 	let value: messages::StringMsg = message.decode()?;
 	info!("received: '{}'", &value);
-	ctx.write().expect("should not happen").danube = Some(value);
+	ctx.write().danube = Some(value);
 	Ok(())
 }
 
 async fn chenab_callback(ctx: Context<AgentProps>, message: Message) -> Result<()> {
 	let value: messages::Quaternion = message.decode()?;
 	info!("received: '{}'", &value);
-	ctx.write().expect("should not happen").chenab = Some(value);
+	ctx.write().chenab = Some(value);
 	Ok(())
 }
 
 async fn salween_callback(ctx: Context<AgentProps>, message: Message) -> Result<()> {
 	let value: messages::PointCloud2 = message.decode()?;
 	info!("received: '{}'", &value);
-	ctx.write().expect("should not happen").salween = Some(value);
+	ctx.write().salween = Some(value);
 	Ok(())
 }
 
 async fn godavari_callback(ctx: Context<AgentProps>, message: Message) -> Result<()> {
 	let value: messages::LaserScan = message.decode()?;
 	info!("received: '{}'", &value);
-	ctx.write().expect("should not happen").godavari = Some(value);
+	ctx.write().godavari = Some(value);
 	Ok(())
 }
 
 async fn yamuna_callback(ctx: Context<AgentProps>, message: Message) -> Result<()> {
 	let value: messages::Vector3 = message.decode()?;
 	info!("received: '{}'", &value);
-	ctx.write().expect("should not happen").yamuna = Some(value);
+	ctx.write().yamuna = Some(value);
 	Ok(())
 }
 
 async fn loire_callback(ctx: Context<AgentProps>, message: Message) -> Result<()> {
 	let value: messages::PointCloud2 = message.decode()?;
 	info!("received: '{}'", &value);
-	ctx.write().expect("should not happen").loire = Some(value);
+	ctx.write().loire = Some(value);
 	Ok(())
 }
 

@@ -19,7 +19,7 @@ async fn columbia_callback(ctx: Context<AgentProps>, message: Message) -> Result
 	let value: messages::Image = message.decode()?;
 	// just to see what has been sent
 	info!("received: '{}'", &value);
-	ctx.write().expect("should not happen").columbia = Some(value);
+	ctx.write().columbia = Some(value);
 	Ok(())
 }
 

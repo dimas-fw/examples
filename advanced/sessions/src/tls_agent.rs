@@ -24,8 +24,8 @@ async fn receiver(ctx: Context<AgentProps>, message: Message) -> Result<()> {
     #[allow(clippy::unwrap_used)]
     let name = ctx.name().unwrap();
     let message: String = message.decode()?;
-    println!("{} received: hostname of {} [{}]", name, message, ctx.read()?.0);
-    ctx.write()?.0 += 1;
+    println!("{} received: hostname of {} [{}]", name, message, ctx.read().0);
+    ctx.write().0 += 1;
     Ok(())
 }
 

@@ -15,7 +15,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Removed
 
-## [0.4.1] - 2024-??-??
+## [0.5.0] - 2024-??-??
 
 ### Added
 
@@ -23,6 +23,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Changed
 
+- adoptions to dimas version 0.5.0
 - names of multi session examples
 
 ### Fixed

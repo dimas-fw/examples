@@ -21,21 +21,21 @@ struct AgentProps {
 
 async fn tigris_callback(ctx: Context<AgentProps>, message: Message) -> Result<()> {
 	let value: messages::Float32 = message.decode()?;
-	ctx.write().expect("should not happen").tigris = value.data;
+	ctx.write().tigris = value.data;
 	info!("received: '{}'", &value);
 	Ok(())
 }
 
 async fn ganges_callback(ctx: Context<AgentProps>, message: Message) -> Result<()> {
 	let value: messages::Int64 = message.decode()?;
-	ctx.write().expect("should not happen").ganges = value.data;
+	ctx.write().ganges = value.data;
 	info!("received: '{}'", &value);
 	Ok(())
 }
 
 async fn nile_callback(ctx: Context<AgentProps>, message: Message) -> Result<()> {
 	let value: messages::Int32 = message.decode()?;
-	ctx.write().expect("should not happen").nile = value.data;
+	ctx.write().nile = value.data;
 	info!("received: '{}'", &value);
 	Ok(())
 }

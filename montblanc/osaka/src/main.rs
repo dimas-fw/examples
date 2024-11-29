@@ -23,21 +23,21 @@ struct AgentProps {
 async fn parana_callback(ctx: Context<AgentProps>, message: Message) -> Result<()> {
 	let value: messages::StringMsg = message.decode()?;
 	info!("received: '{}'", &value);
-	ctx.write().expect("should not happen").parana = Some(value);
+	ctx.write().parana = Some(value);
 	Ok(())
 }
 
 async fn columbia_callback(ctx: Context<AgentProps>, message: Message) -> Result<()> {
 	let value: messages::Image = message.decode()?;
 	info!("received: '{}'", &value);
-	ctx.write().expect("should not happen").columbia = Some(value);
+	ctx.write().columbia = Some(value);
 	Ok(())
 }
 
 async fn colorado_callback(ctx: Context<AgentProps>, message: Message) -> Result<()> {
 	let value: messages::Image = message.decode()?;
 	info!("received: '{}'", &value);
-	ctx.write().expect("should not happen").colorado = Some(value);
+	ctx.write().colorado = Some(value);
 
 	let message = messages::PointCloud2::random();
 	info!("sent: '{}'", &message);

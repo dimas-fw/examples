@@ -12,18 +12,18 @@ struct AgentProps {
 
 async fn put_callback(ctx: Context<AgentProps>, id: String) -> Result<()> {
     println!("{id} is alive");
-    let mut val = ctx.read()?.num;
+    let mut val = ctx.read().num;
     val += 1;
-    ctx.write()?.num = val;
+    ctx.write().num = val;
     println!("Number of agents is {val}");
     Ok(())
 }
 
 async fn delete_callback(ctx: Context<AgentProps>, id: String) -> Result<()> {
     println!("{id} died");
-    let mut val = ctx.read()?.num;
+    let mut val = ctx.read().num;
     val -= 1;
-    ctx.write()?.num = val;
+    ctx.write().num = val;
     println!("Number of agents is {val}");
     Ok(())
 }

@@ -25,7 +25,6 @@ async fn arkansas_callback(ctx: Context<AgentProps>, message: Message) -> Result
 	info!("received: '{}'", &value.data);
 	let final_data = format!("{}\n", value.data);
 	ctx.write()
-		.expect("should not happen")
 		.file
 		.write_all(final_data.as_bytes())
 		.expect("should not happen");

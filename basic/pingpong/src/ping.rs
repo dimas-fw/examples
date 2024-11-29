@@ -64,7 +64,7 @@ async fn main() -> Result<()> {
         .name("timer")
         .interval(Duration::from_secs(1))
         .callback(|ctx| -> Result<()> {
-            let counter = ctx.read()?.counter;
+            let counter = ctx.read().counter;
 
             let message = PingPongMessage {
                 counter,
@@ -87,7 +87,7 @@ async fn main() -> Result<()> {
             println!("Sent {} ", &text);
 
             // increase counter
-            ctx.write()?.counter += 1;
+            ctx.write().counter += 1;
             Ok(())
         })
         .add()?;

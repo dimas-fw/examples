@@ -15,8 +15,16 @@ impl Component for ComponentA {
 }
 
 impl Operational for ComponentA {
-    fn manage_operation_state(&self, _state: OperationState) -> Result<()> {
-        Ok(())
+	fn state(&self) -> OperationState {
+        todo!()
+    }
+
+    fn set_state(&mut self, _state: OperationState) {
+        todo!()
+    }
+
+    fn operationals(&mut self) -> &mut Vec<Box<dyn Operational>> {
+        todo!()
     }
 }
 
@@ -30,8 +38,16 @@ impl Component for ComponentB {
 }
 
 impl Operational for ComponentB {
-    fn manage_operation_state(&self, _state: OperationState) -> Result<()> {
-        Ok(())
+	fn state(&self) -> OperationState {
+        todo!()
+    }
+
+    fn set_state(&mut self, _state: OperationState) {
+        todo!()
+    }
+
+    fn operationals(&mut self) -> &mut Vec<Box<dyn Operational>> {
+        todo!()
     }
 }
 

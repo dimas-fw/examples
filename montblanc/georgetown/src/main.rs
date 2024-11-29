@@ -22,14 +22,14 @@ struct AgentProps {
 async fn lena_callback(ctx: Context<AgentProps>, message: Message) -> Result<()> {
 	let value: messages::WrenchStamped = message.decode()?;
 	info!("received: '{}'", &value);
-	ctx.write().expect("should not happen").lena = Some(value);
+	ctx.write().lena = Some(value);
 	Ok(())
 }
 
 async fn murray_callback(ctx: Context<AgentProps>, message: Message) -> Result<()> {
 	let value: messages::Vector3Stamped = message.decode()?;
 	info!("received: '{}'", &value);
-	ctx.write().expect("should not happen").murray = Some(value);
+	ctx.write().murray = Some(value);
 	Ok(())
 }
 
@@ -65,7 +65,7 @@ async fn main() -> Result<()> {
 			let message = messages::Float64::random();
 			let value = message.data;
 			let msg = Message::encode(&message);
-			ctx.write()?.volga = Some(message);
+			ctx.write().volga = Some(message);
 			ctx.put("volga", msg)?;
 			info!("sent: '{value}'");
 			Ok(())

@@ -34,21 +34,21 @@ struct AgentProps {
 async fn danube_callback(ctx: Context<AgentProps>, message: Message) -> Result<()> {
 	let value: messages::StringMsg = message.decode()?;
 	info!("received: '{}'", &value);
-	ctx.write().expect("should not happen").danube = Some(value);
+	ctx.write().danube = Some(value);
 	Ok(())
 }
 
 async fn tagus_callback(ctx: Context<AgentProps>, message: Message) -> Result<()> {
 	let value: messages::Pose = message.decode()?;
 	info!("received: '{}'", &value);
-	ctx.write().expect("should not happen").tagus = Some(value);
+	ctx.write().tagus = Some(value);
 	Ok(())
 }
 
 async fn missouri_callback(ctx: Context<AgentProps>, message: Message) -> Result<()> {
 	let value: messages::Image = message.decode()?;
 	info!("received: '{}'", &value);
-	ctx.write().expect("should not happen").missouri = Some(value);
+	ctx.write().missouri = Some(value);
 	Ok(())
 }
 
@@ -71,35 +71,35 @@ async fn brazos_callback(ctx: Context<AgentProps>, message: Message) -> Result<(
 async fn yamuna_callback(ctx: Context<AgentProps>, message: Message) -> Result<()> {
 	let value: messages::Vector3 = message.decode()?;
 	info!("received: '{}'", &value);
-	ctx.write().expect("should not happen").yamuna = Some(value);
+	ctx.write().yamuna = Some(value);
 	Ok(())
 }
 
 async fn godavari_callback(ctx: Context<AgentProps>, message: Message) -> Result<()> {
 	let value: messages::LaserScan = message.decode()?;
 	info!("received: '{}'", &value);
-	ctx.write().expect("should not happen").godavari = Some(value);
+	ctx.write().godavari = Some(value);
 	Ok(())
 }
 
 async fn loire_callback(ctx: Context<AgentProps>, message: Message) -> Result<()> {
 	let value: messages::PointCloud2 = message.decode()?;
 	info!("received: '{}'", &value);
-	ctx.write().expect("should not happen").loire = Some(value);
+	ctx.write().loire = Some(value);
 	Ok(())
 }
 
 async fn ohio_callback(ctx: Context<AgentProps>, message: Message) -> Result<()> {
 	let value: messages::Float32 = message.decode()?;
 	info!("received: '{}'", &value);
-	ctx.write().expect("should not happen").ohio = Some(value);
+	ctx.write().ohio = Some(value);
 	Ok(())
 }
 
 async fn volga_callback(ctx: Context<AgentProps>, message: Message) -> Result<()> {
 	let value: messages::Float64 = message.decode()?;
 	info!("received: '{}'", &value);
-	ctx.write().expect("should not happen").volga = Some(value);
+	ctx.write().volga = Some(value);
 	Ok(())
 }
 

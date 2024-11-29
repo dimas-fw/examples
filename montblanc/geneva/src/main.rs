@@ -35,21 +35,21 @@ async fn parana_callback(ctx: Context<AgentProps>, message: Message) -> Result<(
 async fn danube_callback(ctx: Context<AgentProps>, message: Message) -> Result<()> {
 	let value: messages::StringMsg = message.decode()?;
 	info!("received: '{}'", &value);
-	ctx.write().expect("should not happen").danube = Some(value);
+	ctx.write().danube = Some(value);
 	Ok(())
 }
 
 async fn tagus_callback(ctx: Context<AgentProps>, message: Message) -> Result<()> {
 	let value: messages::Pose = message.decode()?;
 	info!("received: '{}'", &value);
-	ctx.write().expect("should not happen").tagus = Some(value);
+	ctx.write().tagus = Some(value);
 	Ok(())
 }
 
 async fn congo_callback(ctx: Context<AgentProps>, message: Message) -> Result<()> {
 	let value: messages::Twist = message.decode()?;
 	info!("received: '{}'", &value);
-	ctx.write().expect("should not happen").congo = Some(value);
+	ctx.write().congo = Some(value);
 	Ok(())
 }
 

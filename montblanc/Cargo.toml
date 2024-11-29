@@ -47,8 +47,9 @@ edition = "2021"
 license = "MIT OR Apache-2.0"
 
 [workspace.dependencies]
-dimas = "0.4.0"
-tracing = "0.1.37"
+#dimas = { path = "../../dimas/dimas" }
+dimas = "0.5.0"
+tracing = "0.1.41"
 tracing-subscriber = "0.3.0"
 
 [profile.release]

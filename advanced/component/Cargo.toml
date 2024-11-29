@@ -21,7 +21,7 @@ name = "agent"
 path = "src/main.rs"
 
 [dependencies]
-#dimas = { version = "0.4.2", features = ["unstable"] }
+#dimas = { version = "0.5.0", features = ["unstable"] }
 dimas = { path = "../../../dimas/dimas", features = ["unstable"] }
 libloading = "0.8.5"
 

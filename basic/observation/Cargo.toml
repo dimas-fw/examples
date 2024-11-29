@@ -20,7 +20,7 @@ name = "observable"
 path = "src/observable.rs"
 
 [dependencies]
-dimas = { version = "0.4.0", features = ["unstable"] }
+dimas = { version = "0.5.0", features = ["unstable"] }
 
 [build-dependencies]
 

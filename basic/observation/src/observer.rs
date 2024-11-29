@@ -16,29 +16,29 @@ struct AgentProps {
 async fn control_response(ctx: Context<AgentProps>, response: ControlResponse) -> Result<()> {
     match response {
         ControlResponse::Accepted => {
-            let limit = ctx.read()?.new_limit;
+            let limit = ctx.read().new_limit;
             println!("Accepted fibonacci up to {limit}");
-            ctx.write()?.limit = limit;
-            ctx.write()?.new_limit += 1;
+            ctx.write().limit = limit;
+            ctx.write().new_limit += 1;
         }
         ControlResponse::Declined => {
-            println!("Declined fibonacci up to {}", ctx.read()?.new_limit);
-            ctx.write()?.limit = 0;
-            ctx.write()?.new_limit = 5;
+            println!("Declined fibonacci up to {}", ctx.read().new_limit);
+            ctx.write().limit = 0;
+            ctx.write().new_limit = 5;
         }
         ControlResponse::Occupied => {
             println!("Service fibonacci is occupied");
-            let occupied_counter = ctx.read()?.occupied_counter + 1;
+            let occupied_counter = ctx.read().occupied_counter + 1;
             // cancel running request whenever 5 occupied messages arrived
             if occupied_counter % 5 == 0 {
                 ctx.cancel_observe("fibonacci")?;
-                ctx.write()?.occupied_counter = 0;
+                ctx.write().occupied_counter = 0;
             } else {
-                ctx.write()?.occupied_counter = occupied_counter;
+                ctx.write().occupied_counter = occupied_counter;
             }
         }
         ControlResponse::Canceled => {
-            println!("Canceled fibonacci up to {}", ctx.read()?.limit);
+            println!("Canceled fibonacci up to {}", ctx.read().limit);
         }
     };
     Ok(())
@@ -55,7 +55,7 @@ async fn response(ctx: Context<AgentProps>, response: ObservableResponse) -> Res
         ObservableResponse::Feedback(value) => {
             let msg = Message::new(value);
             let result: Vec<u128> = msg.decode()?;
-            let limit = ctx.read()?.limit;
+            let limit = ctx.read().limit;
             if result.len() <= limit as usize {
                 println!("Received feedback {result:?}");
             } else {
@@ -65,7 +65,7 @@ async fn response(ctx: Context<AgentProps>, response: ObservableResponse) -> Res
         ObservableResponse::Finished(value) => {
             let msg = Message::new(value);
             let result: Vec<u128> = msg.decode()?;
-            let limit = ctx.read()?.limit;
+            let limit = ctx.read().limit;
             if result.len() == limit as usize {
                 println!("Received result {result:?}");
             } else {
@@ -109,7 +109,7 @@ async fn main() -> Result<()> {
         .name("timer")
         .interval(interval)
         .callback(move |ctx| -> Result<()> {
-            let limit = ctx.read()?.new_limit;
+            let limit = ctx.read().new_limit;
             println!("request fibonacci up to {limit}");
             let msg = FibonacciRequest { limit };
             let message = Message::encode(&msg);
