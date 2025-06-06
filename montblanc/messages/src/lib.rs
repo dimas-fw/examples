@@ -193,7 +193,6 @@ impl Header {
 }
 
 impl Default for Header {
-	#[must_use]
 	fn default() -> Self {
 		Self {
 			timestamp: Timestamp::now(),

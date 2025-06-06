@@ -15,6 +15,19 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Removed
 
+## [0.5.0] - 2024-06-06
+
+### Changed
+- Update to DiMAS 0.5
+
+### Fixed
+- Actualized README.md
+
+### Removed
+- Examples for Pub/Sub, Query, Observation, Liveliness.
+  These can be found in [dimas/examples](https://github.com/dimas-fw/dimas/tree/main/examples))
+
+
 ## [0.4.0] - 2024-11-13
 
 ### Added
