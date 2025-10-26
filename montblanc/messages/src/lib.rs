@@ -7,16 +7,14 @@
 //!
 //! should be modernized and moved into a separate crate
 
-use std::fmt::Display;
-
-use chrono::prelude::*;
+use chrono::{Timelike, Utc};
 use dimas::prelude::*;
-use rand::distributions::Alphanumeric;
-use rand::{random, Rng};
+use rand::{Rng, distr::Alphanumeric, random};
+use std::fmt::Display;
 
 /// function creates a random String of given length
 pub fn random_string(length: usize) -> String {
-	rand::thread_rng()
+	rand::rng()
 		.sample_iter(Alphanumeric)
 		.take(length)
 		.map(char::from)
@@ -193,7 +191,6 @@ impl Header {
 }
 
 impl Default for Header {
-	#[must_use]
 	fn default() -> Self {
 		Self {
 			timestamp: Timestamp::now(),

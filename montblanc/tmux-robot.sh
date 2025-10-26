@@ -31,29 +31,29 @@ tmux rename-window -t $session:$window 'robot'
 #  |             |             |             |             |
 #  +-------------+-------------+-------------+-------------+
 
-tmux split-pane -h -p 80
-tmux split-pane -h -p 67
-tmux split-pane -h -p 50
+tmux split-pane -h -l 80%
+tmux split-pane -h -l 67%
+tmux split-pane -h -l 50%
 
 tmux select-pane -t 0
-tmux split-pane -v -p 80
-tmux split-pane -v -p 67
-tmux split-pane -v -p 50
+tmux split-pane -v -l 80%
+tmux split-pane -v -l 67%
+tmux split-pane -v -l 50%
 
 tmux select-pane -t 4
-tmux split-pane -v -p 80
-tmux split-pane -v -p 67
-tmux split-pane -v -p 50
+tmux split-pane -v -l 80%
+tmux split-pane -v -l 67%
+tmux split-pane -v -l 50%
 
 tmux select-pane -t 8
-tmux split-pane -v -p 80
-tmux split-pane -v -p 67
-tmux split-pane -v -p 50
+tmux split-pane -v -l 80%
+tmux split-pane -v -l 67%
+tmux split-pane -v -l 50%
 
 tmux select-pane -t 12
-tmux split-pane -v -p 80
-tmux split-pane -v -p 67
-tmux split-pane -v -p 50
+tmux split-pane -v -l 80%
+tmux split-pane -v -l 67%
+tmux split-pane -v -l 50%
 
 # start an example in each pane but panes 0, 15
 # end with active pane 0

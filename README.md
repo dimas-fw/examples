@@ -2,43 +2,6 @@
 
 Examples using DiMAS, the **Di**stributed **M**ulti **A**gent **S**ystem framework.
 
-## [Liveliness Token/Subscriber](https://github.com/dimas-fw/examples/tree/main/liveliness)
-
-Implements a liveliness sender (token) and reciever (subscriber) in one program.
-Starting this program twice in separate terminal windows with
-
-```shell
-cargo run --bin liveliness
-```
-
-will show in both terminals an output similar to (will differ in the agent id)
-
-```shell
-Running `target/debug/liveliness`
-2024-01-27T17:34:03.993964Z  INFO liveliness: liveliness: <agent-id> is alive
-Number of agents is 2
-```
-
-The subscriber doesn't see its own token.
-
-## [Publisher/Subscriber](https://github.com/dimas-fw/examples/tree/main/pubsub)
-
-Implements a simple "Hello World!" Publisher/Subscriber pair
-
-Run the publisher in one terminal window with
-
-```shell
-
-cargo run --bin publisher
-
-```
-
-and the subscriber in another terminal window with
-
-```shell
-cargo run --bin subscriber
-```
-
 ## [Ping/Pong](https://github.com/dimas-fw/examples/tree/main/pingpong)
 
 Implements a Ping/Pong pair that measures the roundtrip time. The Ping does not
@@ -47,9 +10,7 @@ wait for a started Pong, but continues pinging.
 Run the ping'er in one terminal window with
 
 ```shell
-
 cargo run --bin ping
-
 ```
 
 and the pong'er in another terminal window with
@@ -60,15 +21,14 @@ cargo run --bin pong
 
 ## [Queryable/Querier](https://github.com/dimas-fw/examples/tree/main/queries)
 
-Implements a simple Qeryable/Querier pair, where the Querier does not wait for
-a started Queryable, but continues querying.
+Implements a Queryable/Querier pair, where the Querier does not wait for
+a started Queryable, but continues querying. On the querier side there are 
+used different kinds of query callbacks. 
 
-Run the query in one terminal window with
+Run the querier in one terminal window with
 
 ```shell
-
-cargo run --bin query
-
+cargo run --bin querier
 ```
 
 and the queryable in another terminal window with
@@ -77,30 +37,18 @@ and the queryable in another terminal window with
 cargo run --bin queryable
 ```
 
-## [Observable/Observer](https://github.com/dimas-fw/examples/tree/main/observation)
+## [Sessions](https://github.com/dimas-fw/examples/tree/main/sessions)
 
-Implements a simple Observable/Observer pair, where the Observer does not wait
-for a started Observable, but continues requesting an Observation.
+Implements 4 agents using different communication configurations. 
+This example shows the difficulties to separate visibility within a clique.
 
-Run the observer in one terminal window with
-
-```shell
-cargo run --bin observer
-```
-
-and the observable in another terminal window with
+Run each agent in a different terminal window with
 
 ```shell
-cargo run --bin observable
+cargo run --bin agentX
 ```
+where X is 1, 2, 3 or 4
 
-## [Router](https://github.com/dimas-fw/examples/tree/main/router)
-
-Implements a simple router
-
-```shell
-cargo run --bin router
-```
 
 ## [Montblanc](https://github.com/dimas-fw/examples/tree/main/montblanc)
 

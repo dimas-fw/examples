@@ -27,20 +27,20 @@ tmux rename-window -t $session:$window 'workstation'
 #  |             |             |             |
 #  +-------------+-------------+-------------+
 
-tmux split-pane -h -p 70
-tmux split-pane -h -p 50
+tmux split-pane -h -l 70%
+tmux split-pane -h -l 50%
 
 tmux select-pane -t 0
-tmux split-pane -v -p 70
-tmux split-pane -v -p 50
+tmux split-pane -v -l 70%
+tmux split-pane -v -l 50%
 
 tmux select-pane -t 3
-tmux split-pane -v -p 70
-tmux split-pane -v -p 50
+tmux split-pane -v -l 70%
+tmux split-pane -v -l 50%
 
 tmux select-pane -t 6
-tmux split-pane -v -p 70
-tmux split-pane -v -p 50
+tmux split-pane -v -l 70%
+tmux split-pane -v -l 50%
 
 # start a job in each pane but panes 0, 4, 8
 # end with active pane 4
