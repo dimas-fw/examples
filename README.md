@@ -54,3 +54,15 @@ where X is 1, 2, 3 or 4
 
 The montblanc benchmark simulates a robot using several nodes/agents communicating
 with a workstation that is running also several nodes/agents.
+
+The easiest way to rn the example is on a `Linux` machine with `tmux` installed.
+Then run the robot in one terminal window with
+
+```shell
+./tmux-robot.sh --release
+```
+and the workstation in another terminal window with
+
+```shell
+./tmux-workstation.sh --release
+```
